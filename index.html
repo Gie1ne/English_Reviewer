@@ -3,16 +3,1262 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GBF-TTC &amp; English Reviewer &amp; Mock Exam &trade; GCastro</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>The Lexicon &amp; Syntax Folio — English Grammar Reviewer &amp; Mock Exam</title>
+  <style>
+    /* ==========================================================================
+       1. DESIGN TOKENS & GREY, BLUE & GREEN PALETTE
+       ========================================================================== */
+    :root {
+      --bg-grey: #f4f7f9;
+      --surface-white: #ffffff;
+      --surface-grey: #e6ecf1;
+      --border-slate: #cbd5e1;
+
+      --text-charcoal: #1e293b;
+      --text-muted: #475569;
+
+      --royal-blue: #1d4ed8;
+      --blue-bright: #2563eb;
+      --blue-deep: #1e3a8a;
+      --blue-soft: #eff6ff;
+
+      --emerald-green: #059669;
+      --emerald-bright: #10b981;
+      --emerald-deep: #047857;
+      --emerald-soft: #ecfdf5;
+
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --shadow-soft: 0 6px 20px rgba(30, 41, 59, 0.06);
+      --shadow-card: 0 10px 28px rgba(30, 41, 59, 0.1);
+      --transition: all 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+
+      --font-serif: Georgia, "Palatino Linotype", "Book Antiqua", Palatino, "Times New Roman", serif;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background-color: var(--bg-grey);
+      color: var(--text-charcoal);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-grey);
+      background-image:
+        radial-gradient(circle at 12% 8%, rgba(37, 99, 235, 0.06) 0%, transparent 45%),
+        radial-gradient(circle at 88% 88%, rgba(5, 150, 105, 0.06) 0%, transparent 50%);
+      color: var(--text-charcoal);
+      min-height: 100vh;
+      overflow-x: hidden;
+      padding-bottom: 4rem;
+    }
+
+    /* ==========================================================================
+       2. TYPOGRAPHY & SCROLL REVEAL ANIMATIONS
+       ========================================================================== */
+    h1, h2, h3, h4, .serif {
+      font-family: var(--font-serif);
+      color: var(--text-charcoal);
+      letter-spacing: -0.01em;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.55s ease, transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ==========================================================================
+       3. HEADER & STICKY NAVIGATION BAR
+       ========================================================================== */
+    .masthead {
+      background: linear-gradient(135deg, var(--blue-deep) 0%, var(--royal-blue) 100%);
+      color: #ffffff;
+      padding: 1.5rem 1.25rem 1.25rem;
+      border-bottom: 4px solid var(--emerald-bright);
+      position: relative;
+    }
+
+    .masthead-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .brand-block {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+    }
+
+    .brand-emblem {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background-color: var(--emerald-green);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .brand-title {
+      color: #ffffff;
+      font-size: clamp(1.25rem, 2.8vw, 1.75rem);
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .brand-subtitle {
+      font-size: 0.85rem;
+      color: #dbeafe;
+      margin-top: 0.2rem;
+    }
+
+    .status-strip {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .offline-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background-color: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(16, 185, 129, 0.65);
+      color: #ffffff;
+      padding: 0.42rem 0.85rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--emerald-bright);
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.35);
+    }
+
+    /* Sticky Tab Navigation */
+    .nav-bar {
+      position: sticky;
+      top: 0;
+      z-index: 90;
+      background-color: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(8px);
+      border-bottom: 1.5px solid var(--border-slate);
+      box-shadow: 0 4px 14px rgba(30, 41, 59, 0.05);
+    }
+
+    .nav-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0.6rem 1rem;
+      display: flex;
+      gap: 0.5rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .nav-inner::-webkit-scrollbar {
+      display: none;
+    }
+
+    .nav-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.65rem 1.05rem;
+      border-radius: var(--radius-md);
+      border: 1.5px solid transparent;
+      background: transparent;
+      color: var(--text-charcoal);
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: var(--transition);
+    }
+
+    .nav-tab:hover {
+      background-color: var(--blue-soft);
+      border-color: var(--royal-blue);
+      color: var(--royal-blue);
+    }
+
+    .nav-tab.active {
+      background-color: var(--royal-blue);
+      color: #ffffff;
+      border-color: var(--royal-blue);
+      box-shadow: 0 4px 12px rgba(29, 78, 216, 0.25);
+    }
+
+    .nav-badge {
+      background-color: var(--emerald-green);
+      color: #ffffff;
+      font-size: 0.72rem;
+      padding: 0.12rem 0.48rem;
+      border-radius: 999px;
+      font-weight: 700;
+    }
+
+    /* ==========================================================================
+       4. LAYOUT CONTAINERS & BUTTONS
+       ========================================================================== */
+    .container {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 1.5rem 1rem;
+    }
+
+    .view-panel {
+      display: none;
+    }
+
+    .view-panel.active {
+      display: block;
+      animation: fadePanel 0.35s ease;
+    }
+
+    @keyframes fadePanel {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      padding: 0.65rem 1.15rem;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid var(--border-slate);
+      background-color: var(--surface-white);
+      color: var(--text-charcoal);
+      font-family: var(--font-sans);
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      min-height: 42px;
+      text-decoration: none;
+    }
+
+    .btn:hover:not(:disabled) {
+      background-color: var(--surface-grey);
+      border-color: var(--royal-blue);
+      color: var(--royal-blue);
+      transform: translateY(-1px);
+    }
+
+    .btn:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    .btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .btn-primary {
+      background-color: var(--royal-blue);
+      color: #ffffff;
+      border-color: var(--royal-blue);
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background-color: var(--blue-deep);
+      border-color: var(--blue-deep);
+      color: #ffffff;
+    }
+
+    .btn-accent {
+      background-color: var(--emerald-green);
+      color: #ffffff;
+      border-color: var(--emerald-green);
+    }
+
+    .btn-accent:hover:not(:disabled) {
+      background-color: var(--emerald-deep);
+      border-color: var(--emerald-deep);
+      color: #ffffff;
+    }
+
+    .btn-sm {
+      padding: 0.42rem 0.8rem;
+      font-size: 0.8rem;
+      min-height: 34px;
+    }
+
+    /* ==========================================================================
+       5. OVERVIEW PROGRESS BANNER
+       ========================================================================== */
+    .progress-summary-card {
+      background-color: var(--surface-white);
+      border: 1.5px solid var(--border-slate);
+      border-left: 6px solid var(--emerald-green);
+      border-radius: var(--radius-md);
+      padding: 1.15rem 1.35rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow-soft);
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .stat-box {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .stat-label {
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+
+    .stat-value {
+      font-family: var(--font-serif);
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text-charcoal);
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 9px;
+      background-color: var(--surface-grey);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 0.25rem;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--royal-blue), var(--emerald-bright));
+      border-radius: 999px;
+      transition: width 0.5s ease;
+    }
+
+    /* ==========================================================================
+       6. TAB 1: STUDY REVIEWER STYLES
+       ========================================================================== */
+    .filter-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+    }
+
+    .topic-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    .pill-btn {
+      padding: 0.45rem 0.9rem;
+      border-radius: 999px;
+      border: 1.5px solid var(--border-slate);
+      background-color: var(--surface-white);
+      color: var(--text-charcoal);
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .pill-btn:hover {
+      border-color: var(--royal-blue);
+      color: var(--royal-blue);
+    }
+
+    .pill-btn.active {
+      background-color: var(--royal-blue);
+      border-color: var(--royal-blue);
+      color: #ffffff;
+    }
+
+    .search-box {
+      position: relative;
+      flex: 1 1 250px;
+      max-width: 340px;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 0.6rem 0.95rem 0.6rem 2.3rem;
+      border-radius: var(--radius-md);
+      border: 1.5px solid var(--border-slate);
+      background-color: var(--surface-white);
+      color: var(--text-charcoal);
+      font-size: 0.9rem;
+      outline: none;
+    }
+
+    .search-input:focus {
+      border-color: var(--royal-blue);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .reviewer-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .study-card {
+      background-color: var(--surface-white);
+      border: 1.5px solid var(--border-slate);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    .study-card.mastered {
+      border-color: var(--emerald-green);
+      background-color: #f8fcfa;
+    }
+
+    .study-card-header {
+      padding: 1.15rem 1.35rem;
+      background-color: var(--surface-grey);
+      border-bottom: 1px solid var(--border-slate);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      cursor: pointer;
+    }
+
+    .study-topic-tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      background-color: var(--royal-blue);
+      color: #ffffff;
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+      margin-bottom: 0.3rem;
+    }
+
+    .study-card-title {
+      font-size: 1.22rem;
+      font-weight: 700;
+    }
+
+    .study-card-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .study-card-body {
+      padding: 1.35rem;
+      display: block;
+    }
+
+    .study-card.collapsed .study-card-body {
+      display: none;
+    }
+
+    .rule-lead {
+      font-size: 0.96rem;
+      color: var(--text-charcoal);
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px dashed var(--border-slate);
+    }
+
+    .rule-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 0.85rem;
+    }
+
+    .rule-item {
+      background-color: var(--bg-grey);
+      border: 1px solid var(--border-slate);
+      border-left: 4px solid var(--royal-blue);
+      border-radius: var(--radius-sm);
+      padding: 0.85rem 1rem;
+    }
+
+    .rule-item strong {
+      color: var(--text-charcoal);
+      display: block;
+      font-size: 0.94rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .example-callout {
+      margin-top: 0.45rem;
+      padding: 0.45rem 0.7rem;
+      background-color: var(--surface-white);
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    .example-callout span {
+      font-style: normal;
+      font-weight: 700;
+      color: var(--emerald-green);
+    }
+
+    .mnemonic-box {
+      margin-top: 1rem;
+      background-color: var(--blue-deep);
+      color: #ffffff;
+      border-left: 5px solid var(--emerald-bright);
+      border-radius: var(--radius-md);
+      padding: 1rem 1.2rem;
+    }
+
+    .mnemonic-box h4 {
+      color: #6ee7b7;
+      margin-bottom: 0.4rem;
+      font-size: 1rem;
+    }
+
+    .ref-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 0.75rem;
+      font-size: 0.88rem;
+      background-color: var(--surface-white);
+      color: var(--text-charcoal);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+    }
+
+    .ref-table th, .ref-table td {
+      border: 1px solid var(--border-slate);
+      padding: 0.55rem 0.75rem;
+      text-align: left;
+    }
+
+    .ref-table th {
+      background-color: var(--royal-blue);
+      color: #ffffff;
+    }
+
+    /* ==========================================================================
+       7. TAB 2: INTERACTIVE 3D FLIP CARDS
+       ========================================================================== */
+    .flashcard-stage {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .flashcard-controls-top {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .select-control {
+      padding: 0.55rem 0.9rem;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid var(--border-slate);
+      background-color: var(--surface-white);
+      color: var(--text-charcoal);
+      font-weight: 600;
+      font-size: 0.88rem;
+      min-height: 42px;
+    }
+
+    .select-control:focus {
+      outline: none;
+      border-color: var(--royal-blue);
+    }
+
+    .card-scene {
+      perspective: 1200px;
+      width: 100%;
+      min-height: 330px;
+      margin: 1rem 0;
+      cursor: pointer;
+    }
+
+    .card-3d {
+      position: relative;
+      width: 100%;
+      min-height: 330px;
+      transition: transform 0.62s cubic-bezier(0.22, 1, 0.36, 1);
+      transform-style: preserve-3d;
+    }
+
+    .card-3d.is-flipped {
+      transform: rotateY(180deg);
+    }
+
+    .card-face {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: var(--radius-lg);
+      padding: 1.75rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: var(--shadow-card);
+      border: 2px solid var(--royal-blue);
+    }
+
+    .card-front {
+      background-color: var(--surface-white);
+      color: var(--text-charcoal);
+    }
+
+    .card-back {
+      background: linear-gradient(145deg, var(--blue-deep) 0%, var(--royal-blue) 100%);
+      color: #ffffff;
+      transform: rotateY(180deg);
+      border-color: var(--emerald-bright);
+    }
+
+    .card-meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .card-front .card-meta-row {
+      color: var(--royal-blue);
+    }
+
+    .card-back .card-meta-row {
+      color: #6ee7b7;
+    }
+
+    .card-main-text {
+      text-align: center;
+      margin: auto 0;
+      padding: 1rem 0;
+    }
+
+    .card-front .card-main-text h3 {
+      font-size: clamp(1.25rem, 3vw, 1.65rem);
+      line-height: 1.4;
+    }
+
+    .card-back .card-main-text p {
+      font-size: 1.05rem;
+      line-height: 1.55;
+      color: #ffffff;
+    }
+
+    .card-back-example {
+      margin-top: 0.85rem;
+      padding: 0.65rem 0.9rem;
+      background-color: rgba(255, 255, 255, 0.12);
+      border-left: 3px solid var(--emerald-bright);
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-style: italic;
+      color: #ecfdf5;
+    }
+
+    .card-hint-footer {
+      text-align: center;
+      font-size: 0.8rem;
+      opacity: 0.8;
+    }
+
+    .flashcard-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+
+    /* ==========================================================================
+       8. TAB 3: 105-ITEM MULTI-FORMAT MOCK EXAM
+       ========================================================================== */
+    .exam-header-box {
+      background-color: var(--surface-white);
+      border: 1.5px solid var(--border-slate);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .exam-controls-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 0.85rem;
+      padding-top: 0.85rem;
+      border-top: 1px solid var(--border-slate);
+    }
+
+    .question-navigator {
+      background-color: var(--surface-white);
+      border: 1.5px solid var(--border-slate);
+      border-radius: var(--radius-md);
+      padding: 0.9rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .nav-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(34px, 1fr));
+      gap: 0.35rem;
+      margin-top: 0.6rem;
+      max-height: 150px;
+      overflow-y: auto;
+      padding-right: 0.25rem;
+    }
+
+    .q-dot {
+      height: 32px;
+      border-radius: 6px;
+      border: 1px solid var(--border-slate);
+      background-color: var(--bg-grey);
+      color: var(--text-charcoal);
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .q-dot.answered {
+      background-color: var(--emerald-green);
+      color: #ffffff;
+      border-color: var(--emerald-green);
+    }
+
+    .q-dot.current-page {
+      outline: 2px solid var(--royal-blue);
+    }
+
+    .exam-section-banner {
+      background-color: var(--blue-deep);
+      color: #ffffff;
+      padding: 0.9rem 1.2rem;
+      border-radius: var(--radius-md);
+      margin: 1.25rem 0 1rem;
+      border-left: 6px solid var(--emerald-bright);
+    }
+
+    .exam-section-banner h3 {
+      color: #ffffff;
+      font-size: 1.12rem;
+    }
+
+    .exam-section-banner p {
+      font-size: 0.85rem;
+      color: #dbeafe;
+      margin-top: 0.2rem;
+    }
+
+    .question-card {
+      background-color: var(--surface-white);
+      border: 1.5px solid var(--border-slate);
+      border-radius: var(--radius-md);
+      padding: 1.2rem;
+      margin-bottom: 1rem;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .q-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-bottom: 0.65rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--royal-blue);
+      text-transform: uppercase;
+    }
+
+    .q-prompt {
+      font-size: 1.02rem;
+      font-weight: 600;
+      color: var(--text-charcoal);
+      margin-bottom: 0.95rem;
+    }
+
+    /* Multiple Choice Options */
+    .mc-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 0.65rem;
+    }
+
+    /* True or False Options */
+    .tf-options {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(130px, 220px));
+      gap: 0.75rem;
+    }
+
+    .mc-option {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.75rem 0.95rem;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid var(--border-slate);
+      background-color: var(--bg-grey);
+      cursor: pointer;
+      transition: var(--transition);
+      text-align: left;
+      font-size: 0.92rem;
+      color: var(--text-charcoal);
+      min-height: 46px;
+    }
+
+    .mc-option:hover {
+      border-color: var(--royal-blue);
+      background-color: var(--blue-soft);
+    }
+
+    .mc-option.selected {
+      background-color: var(--royal-blue);
+      color: #ffffff;
+      border-color: var(--royal-blue);
+    }
+
+    .mc-letter {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background-color: var(--emerald-green);
+      color: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* Text Inputs for Identification & Fill-in-the-Blank */
+    .text-answer-input {
+      width: 100%;
+      max-width: 460px;
+      padding: 0.7rem 0.95rem;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid var(--border-slate);
+      background-color: var(--bg-grey);
+      color: var(--text-charcoal);
+      font-size: 0.96rem;
+      font-weight: 600;
+      outline: none;
+    }
+
+    .text-answer-input:focus {
+      border-color: var(--royal-blue);
+      background-color: #ffffff;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+    }
+
+    /* Drag & Drop + Tap-to-Place Board */
+    .dnd-board {
+      background-color: var(--surface-white);
+      border: 2px solid var(--royal-blue);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .dnd-instructions {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 0.85rem;
+      background-color: var(--blue-soft);
+      border-left: 3px solid var(--royal-blue);
+      padding: 0.6rem 0.85rem;
+      border-radius: var(--radius-sm);
+    }
+
+    .dnd-bank {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      padding: 0.85rem;
+      background-color: var(--bg-grey);
+      border: 1.5px dashed var(--royal-blue);
+      border-radius: var(--radius-md);
+      margin-bottom: 1rem;
+      min-height: 58px;
+    }
+
+    .dnd-token {
+      padding: 0.55rem 0.9rem;
+      background-color: var(--royal-blue);
+      color: #ffffff;
+      border-radius: var(--radius-sm);
+      font-size: 0.86rem;
+      font-weight: 600;
+      cursor: grab;
+      user-select: none;
+      transition: var(--transition);
+      border: 2px solid transparent;
+    }
+
+    .dnd-token:active {
+      cursor: grabbing;
+    }
+
+    .dnd-token.selected-token {
+      background-color: var(--emerald-green);
+      border-color: var(--blue-deep);
+      transform: scale(1.04);
+      box-shadow: 0 4px 12px rgba(5, 150, 105, 0.28);
+    }
+
+    .dnd-token.placed-token {
+      opacity: 0.45;
+    }
+
+    .dnd-slots {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .dnd-row {
+      display: grid;
+      grid-template-columns: 1fr minmax(200px, 270px);
+      gap: 0.75rem;
+      align-items: center;
+      background-color: var(--bg-grey);
+      padding: 0.75rem 0.95rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-slate);
+    }
+
+    @media (max-width: 680px) {
+      .dnd-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .dnd-dropzone {
+      min-height: 44px;
+      padding: 0.45rem 0.75rem;
+      border: 2px dashed var(--royal-blue);
+      border-radius: var(--radius-sm);
+      background-color: var(--surface-white);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .dnd-dropzone.drag-over {
+      background-color: var(--blue-soft);
+      border-style: solid;
+    }
+
+    .dnd-dropzone.filled {
+      background-color: var(--emerald-green);
+      color: #ffffff;
+      border-style: solid;
+      border-color: var(--emerald-deep);
+    }
+
+    .clear-slot-btn {
+      background: rgba(0, 0, 0, 0.22);
+      border: none;
+      color: #ffffff;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .pagination-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background-color: var(--surface-white);
+      border-radius: var(--radius-md);
+      border: 1.5px solid var(--border-slate);
+    }
+
+    /* ==========================================================================
+       9. TAB 4: PERFORMANCE ANALYTICS & STUDY FEEDBACK
+       ========================================================================== */
+    .analytics-hero {
+      background: linear-gradient(135deg, var(--blue-deep) 0%, var(--royal-blue) 100%);
+      color: #ffffff;
+      border-radius: var(--radius-lg);
+      padding: 1.65rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 5px solid var(--emerald-bright);
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.25rem;
+      align-items: center;
+    }
+
+    .analytics-hero h2 {
+      color: #ffffff;
+      font-size: 1.6rem;
+    }
+
+    .score-circle {
+      width: 124px;
+      height: 124px;
+      border-radius: 50%;
+      border: 6px solid var(--emerald-bright);
+      background-color: rgba(255, 255, 255, 0.12);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+    }
+
+    .score-circle strong {
+      font-family: var(--font-serif);
+      font-size: 1.85rem;
+      color: #ffffff;
+      line-height: 1.1;
+    }
+
+    .score-circle span {
+      font-size: 0.78rem;
+      color: #a7f3d0;
+      font-weight: 700;
+    }
+
+    .analytics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .panel-card {
+      background-color: var(--surface-white);
+      border: 1.5px solid var(--border-slate);
+      border-radius: var(--radius-lg);
+      padding: 1.35rem;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .panel-card h3 {
+      margin-bottom: 1rem;
+      font-size: 1.18rem;
+      border-bottom: 1.5px solid var(--border-slate);
+      padding-bottom: 0.5rem;
+    }
+
+    .bar-row {
+      margin-bottom: 0.95rem;
+    }
+
+    .bar-label-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.86rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+    }
+
+    .bar-track {
+      height: 11px;
+      background-color: var(--surface-grey);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      background-color: var(--emerald-green);
+      border-radius: 999px;
+      transition: width 0.6s ease;
+    }
+
+    .bar-fill.weak {
+      background-color: var(--royal-blue);
+    }
+
+    .feedback-recommendation {
+      background-color: var(--bg-grey);
+      border-left: 5px solid var(--emerald-green);
+      border-radius: var(--radius-sm);
+      padding: 0.95rem 1.1rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .feedback-recommendation h4 {
+      font-size: 1rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .review-item-card {
+      background-color: var(--bg-grey);
+      border: 1.5px solid var(--border-slate);
+      border-left: 5px solid var(--royal-blue);
+      border-radius: var(--radius-sm);
+      padding: 0.9rem 1rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .review-item-card.correct {
+      border-left-color: var(--emerald-green);
+    }
+
+    /* ==========================================================================
+       10. CUSTOM MODAL DIALOG (NO ALERT/CONFIRM) & TOAST
+       ========================================================================== */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(15, 23, 42, 0.65);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      z-index: 200;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-box {
+      background-color: var(--surface-white);
+      border: 2px solid var(--royal-blue);
+      border-radius: var(--radius-lg);
+      max-width: 460px;
+      width: 100%;
+      padding: 1.5rem;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.3);
+    }
+
+    .modal-box h3 {
+      margin-bottom: 0.6rem;
+      font-size: 1.25rem;
+    }
+
+    .modal-box p {
+      font-size: 0.94rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.65rem;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 1.25rem;
+      right: 1.25rem;
+      background-color: var(--blue-deep);
+      color: #ffffff;
+      border: 1.5px solid var(--emerald-bright);
+      padding: 0.75rem 1.15rem;
+      border-radius: var(--radius-md);
+      font-size: 0.86rem;
+      font-weight: 600;
+      box-shadow: var(--shadow-card);
+      transform: translateY(120%);
+      opacity: 0;
+      transition: var(--transition);
+      z-index: 180;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  </style>
 </head>
 <body>
 
+  <!-- ========================================================================
+       HEADER / ACADEMIC MASTHEAD
+       ======================================================================== -->
   <header class="masthead">
     <div class="masthead-inner">
       <div class="brand-block">
         <div class="brand-emblem" aria-hidden="true">
-
+          <!-- Embedded Offline SVG Book Quill Icon -->
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
             <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
@@ -37,6 +1283,10 @@
       </div>
     </div>
   </header>
+
+  <!-- ========================================================================
+       STICKY NAVIGATION TABS
+       ======================================================================== -->
   <nav class="nav-bar" aria-label="Reviewer Sections">
     <div class="nav-inner">
       <button type="button" class="nav-tab active" data-tab="reviewer">
@@ -242,6 +1492,1534 @@
 
   <!-- Offline Save Toast -->
   <div class="toast" id="toastBanner" role="status" aria-live="polite">Progress saved offline</div>
-<script src="script.js" defer></script>
+
+  <script>
+    /* ==========================================================================
+       COMPLETE REVIEWER DATASET (VERBATIM FROM PROVIDED REFERENCE DOCUMENT)
+       ========================================================================== */
+    const STUDY_SECTIONS = [
+      {
+        id: "sec-cap",
+        topic: "Capitalization",
+        title: "CAPITALIZATION — Core Rules & Applications",
+        lead: "Capitalization establishes structure and distinguishes specific entities from general concepts. Following standard mechanics ensures clarity and professional written communication.",
+        rules: [
+          {
+            name: "Sentence Beginnings",
+            desc: "Every new sentence must start with a capital letter.",
+            example: "The weather is pleasant today."
+          },
+          {
+            name: "Proper Nouns: Titles before Personal Names",
+            desc: "Capitalize specific names of people, places, organizations, and brand names.",
+            example: "President Obama, Uncle Jerry, Doctor Smith"
+          },
+          {
+            name: "Proper Nouns: Specific Geographical Locations",
+            desc: "Capitalize specific names of geographical places and landmarks.",
+            example: "Tito's Taco Palace, New York City, Mount Everest"
+          },
+          {
+            name: "Proper Nouns: Organizations & Institutions",
+            desc: "Capitalize official names of organizations and institutions.",
+            example: "World Wildlife Fund, United Nations"
+          },
+          {
+            name: "Proper Nouns: Companies & Corporate Entities",
+            desc: "Capitalize names of companies and corporate entities.",
+            example: "Starbucks, Google, Microsoft"
+          },
+          {
+            name: "Proper Nouns: Brand & Product Names",
+            desc: "Capitalize specific brand and product names.",
+            example: "Oreo, Coca-Cola, IPhone"
+          },
+          {
+            name: "Proper Nouns: Languages & Nationalities",
+            desc: "Capitalize languages, nationalities, and proper adjectives derived from them.",
+            example: "French fries, Spanish moss, Brazilians, Egyptians"
+          },
+          {
+            name: "Proper Nouns: Holidays & National Observances",
+            desc: "Capitalize holidays and national observances.",
+            example: "Thanksgiving, Halloween, Christmas"
+          },
+          {
+            name: "Proper Nouns: Historical Eras & Events",
+            desc: "Capitalize historical eras and events.",
+            example: "Old Kingdom, Renaissance, Middle Ages"
+          },
+          {
+            name: "Pronoun \"I\"",
+            desc: "Always capitalized, regardless of its position in a sentence.",
+            example: "She and I went to the museum."
+          }
+        ],
+        mnemonicTitle: "Key Takeaway",
+        mnemonicHtml: "Capitalize specific, unique identifiers (<strong>Proper Nouns</strong>) and sentence starters. Do not capitalize general categories or common nouns (e.g., capitalize <em>Mount Everest</em>, but not <em>mountain</em>)."
+      },
+      {
+        id: "sec-punct-sent",
+        topic: "Punctuation & Sentence Types",
+        title: "PUNCTUATION & SENTENCE TYPES — Classification by Purpose",
+        lead: "Punctuation directs sentence flow, clarifies relationships between ideas, and indicates emotional tone or intent.",
+        rules: [
+          {
+            name: "Declarative Sentence (.)",
+            desc: "Makes a statement or states a fact.",
+            example: "She loves reading classic literature."
+          },
+          {
+            name: "Interrogative Sentence (?)",
+            desc: "Directs a formal question to the reader.",
+            example: "Did you finish the English reviewer assignment?"
+          },
+          {
+            name: "Imperative Sentence (.)",
+            desc: "Issues a command, direction, or request.",
+            example: "Please close the door quietly."
+          },
+          {
+            name: "Exclamatory Sentence (!)",
+            desc: "Expresses strong emotion, surprise, or urgency.",
+            example: "What an incredible performance that was!"
+          }
+        ]
+      },
+      {
+        id: "sec-punct-marks",
+        topic: "Punctuation & Sentence Types",
+        title: "PUNCTUATION — Commas (,), Semicolons (;), Colons (:) & Apostrophes (')",
+        lead: "Commas separate list items, set off introductory elements, and join clauses.",
+        rules: [
+          {
+            name: "Commas (,): Interrupting Material (Appositives / Non-essential Clauses)",
+            desc: "Enclose non-essential information with commas before and after.",
+            example: "My brother, who lives in New York, is visiting us tomorrow."
+          },
+          {
+            name: "Commas (,): Coordinating Conjunctions (FANBOYS)",
+            desc: "Combine two independent clauses using a comma followed by For, And, Nor, But, Or, Yet, or So.",
+            example: "I wanted to go for a walk, but it started raining heavily."
+          },
+          {
+            name: "Commas (,): Listing Items (Two items vs. Oxford Series)",
+            desc: "Separate individual items in a series.",
+            example: "Two items: Cats and dogs make great pets. | Three or more items (Oxford Series): I need apples, bananas, and oranges."
+          },
+          {
+            name: "Semicolons (;)",
+            desc: "Connects closely related independent clauses. Rule: Do NOT use a semicolon to introduce a list.",
+            example: "David is a talented dancer; he is also extremely funny."
+          },
+          {
+            name: "Colons (:)",
+            desc: "Introduces an expansion, list, or quotation. Rule: Place after a complete independent clause.",
+            example: "Please bring the following items: a notebook, two pencils, and an eraser."
+          },
+          {
+            name: "Apostrophes ('): Possession (Ownership)",
+            desc: "Singular Nouns: Add 's. Plural Nouns ending in -s: Add ' after the existing 's'.",
+            example: "Singular: David's jacket | Plural ending in -s: the students' classroom"
+          },
+          {
+            name: "Apostrophes ('): Shortened",
+            desc: "Replaces missing characters when combining words.",
+            example: "she + had / she + would → she'd | cannot → can't | should + have → should've"
+          }
+        ]
+      },
+      {
+        id: "sec-pos-nouns",
+        topic: "Parts of Speech",
+        title: "PARTS OF SPEECH (PAPANICVA) & Nouns — Classifications & Types",
+        lead: "Nouns identify persons, places, things, animals, abstract ideas, or events. Example: Dogs can be extremely cute and loyal.",
+        rules: [
+          {
+            name: "Common Noun",
+            desc: "Generic, unspecified entities.",
+            example: "city, teacher, country, phone"
+          },
+          {
+            name: "Proper Noun",
+            desc: "Specific, named entities requiring capitalization.",
+            example: "Tokyo, Mr. Davis, Philippines, iPhone"
+          },
+          {
+            name: "Concrete Noun",
+            desc: "Tangible elements perceived through the physical senses.",
+            example: "table, perfume, music, coffee"
+          },
+          {
+            name: "Abstract Noun",
+            desc: "Intangible concepts, emotions, or values.",
+            example: "freedom, honesty, love, courage, happiness"
+          },
+          {
+            name: "Collective Noun",
+            desc: "Identifies a group acting as a single unit.",
+            example: "team, flock of birds, herd of cattle, committee"
+          },
+          {
+            name: "Count Noun",
+            desc: "Nouns capable of being counted individually.",
+            example: "one book, three chairs, ten students"
+          },
+          {
+            name: "Mass Noun",
+            desc: "Uncountable substances or broad concepts.",
+            example: "water, rice, information, sugar, furniture"
+          }
+        ],
+        mnemonicTitle: "PARTS OF SPEECH — P A P A N I C V A",
+        mnemonicHtml: "<strong>P</strong> - Pronoun &bull; <strong>A</strong> – Adjective &bull; <strong>P</strong> - Preposition &bull; <strong>A</strong> – Adverb &bull; <strong>N</strong> - Noun &bull; <strong>I</strong> - Interjection &bull; <strong>C</strong> - Conjunction &bull; <strong>V</strong> - Verb &bull; <strong>A</strong> - Article"
+      },
+      {
+        id: "sec-pos-plurals",
+        topic: "Parts of Speech",
+        title: "NOUNS — Rules for Forming Plural Nouns",
+        lead: "Follow these standard spelling patterns when forming plural nouns.",
+        rules: [
+          {
+            name: "Standard Form",
+            desc: "Add -s.",
+            example: "office → offices, book → books"
+          },
+          {
+            name: "Sibilant Endings (-s, -sh, -ch, -x, -z)",
+            desc: "Add -es.",
+            example: "class → classes, box → boxes, church → churches"
+          },
+          {
+            name: "Ending in -f or -fe",
+            desc: "Change ending to -ve then add -s.",
+            example: "shelf → shelves, knife → knives, leaf → leaves"
+          },
+          {
+            name: "Ending in -y (Preceded by Consonant)",
+            desc: "Change -y to -ies.",
+            example: "priority → priorities, city → cities, baby → babies"
+          },
+          {
+            name: "Ending in -y (Preceded by Vowel)",
+            desc: "Add -s.",
+            example: "boy → boys, key → keys, day → days"
+          },
+          {
+            name: "Plural-Only Nouns",
+            desc: "Inherently plural entities taking plural verb forms.",
+            example: "clothes, pants, shorts, scissors, glasses"
+          }
+        ]
+      },
+      {
+        id: "sec-pos-verbs",
+        topic: "Parts of Speech",
+        title: "VERBS — Regular vs. Irregular Verb Patterns & Functional Classifications",
+        lead: "Verbs indicate physical actions, mental activities, states of being, or conditions.",
+        rules: [
+          {
+            name: "Regular Verbs",
+            desc: "Form past tense and past participle structures by appending -ed or -d.",
+            example: "Base: walk → Past: walked → Past Participle: walked | Base: play → Past: played → Past Participle: played"
+          },
+          {
+            name: "Irregular Verbs",
+            desc: "Modify internal vowels or change completely without fixed patterns.",
+            example: "go → went → gone | drink → drank → drunk | forgive → forgave → forgiven | come → came → come | forget → forgot → forgotten | find → found → found"
+          },
+          {
+            name: "Action Verbs",
+            desc: "Express physical or internal mental activities.",
+            example: "Physical: run, write, jump | Mental: think, remember, hope"
+          },
+          {
+            name: "Linking Verbs",
+            desc: "Reconnect the subject to a subject complement (noun or adjective). Primary 'be' forms: am, is, are, was, were, be, been, being.",
+            example: "She is an extraordinary scientist."
+          },
+          {
+            name: "Helping Verbs",
+            desc: "Support main verbs to clarify tense, mood, or voice (do, did, does, have, has, had, may, might, must, should, will).",
+            example: "They were running late; she must have forgotten her key."
+          },
+          {
+            name: "Transitive Verbs",
+            desc: "Direct action toward a receiving direct object.",
+            example: "The chef baked a cake. (cake = direct object)"
+          },
+          {
+            name: "Intransitive Verbs",
+            desc: "Express action without requiring an object recipient.",
+            example: "The baby slept peacefully. (No direct object present)"
+          }
+        ]
+      },
+      {
+        id: "sec-sent-struct",
+        topic: "Sentence Structures & Clauses",
+        title: "SENTENCE STRUCTURES & CLAUSES — Fundamental Components & The 4 Sentence Structures",
+        lead: "Subject: The primary noun, pronoun, or entity driving the sentence. Predicate: The verb component providing information about the subject.",
+        rules: [
+          {
+            name: "Compound Subject & Compound Predicate",
+            desc: "Compound Subject: Multiple subjects performing the same action. Compound Predicate: Multiple actions executed by the primary subject.",
+            example: "Compound Subject: David and Mark submitted their essays. | Compound Predicate: The puppy barked and ran across the yard."
+          },
+          {
+            name: "Warning: Avoid Fragments!",
+            desc: "A sentence fragment lacks a main subject, a complete verb, or an independent thought.",
+            example: "Fragment: Because it was raining outside. (Incomplete) | Corrected: Because it was raining outside, we stayed indoors. (Complete thought)"
+          },
+          {
+            name: "1. Simple Sentence",
+            desc: "Contains 1 independent clause expressing a unified thought (SS-SP, CS-SP, SS-CP, CS-CP).",
+            example: "SS-SP: The dog barked. | CS-SP: The dog and the cat slept. | SS-CP: The dog barked and ran. | CS-CP: The dog and cat barked and ran."
+          },
+          {
+            name: "2. Compound Sentence",
+            desc: "Contains 2 or more independent clauses joined by a coordinating conjunction (FANBOYS) paired with a comma, or linked directly with a semicolon (;).",
+            example: "Example 1: She worked hard, so she passed the exam easily. | Example 2: The library was quiet; students were studying for finals."
+          },
+          {
+            name: "3. Complex Sentence",
+            desc: "Contains 1 independent clause linked to 1 or more dependent (subordinate) clauses using subordinating conjunctions (because, although, since, when, if).",
+            example: "Example 1: Although it was cold, we went for a stroll in the park. | Example 2: I will call you when I arrive at the station."
+          },
+          {
+            name: "4. Compound-Complex Sentence",
+            desc: "Contains 2 or more independent clauses combined with 1 or more dependent clauses.",
+            example: "Because the weather was bad, the flight was delayed, and many travelers were stranded at the airport."
+          }
+        ]
+      },
+      {
+        id: "sec-sva-basic",
+        topic: "Subject-Verb Agreement",
+        title: "SUBJECT-VERB AGREEMENT — Basic Rule, Pronoun Reference Table & Rules 1–3C",
+        lead: "Plural verb: No -s ending. Singular subject: A singular subject (she, Bill, car) takes a singular verb (is, goes, shines).",
+        rules: [
+          {
+            name: "Exempted! (Exceptions to Basic Rule)",
+            desc: "\"I\" and \"You\" are singular subjects, but their verbs still take no -s:",
+            example: "I study (no -s) | You study (no -s)"
+          },
+          {
+            name: "RULE 1: INTERVENING PHRASE OR CLAUSE",
+            desc: "Note: Something goes in the middle between the subject and the verb. Rule: The intervening phrase or clause between the subject and verb does not change the number of the subject.",
+            example: "A can of tuna beans sits on the shelf."
+          },
+          {
+            name: "RULE 2: COMPOUND SUBJECTS JOINED BY \"AND\"",
+            desc: "Rule: Compound subjects joined by \"and\" are always plural. Exception (Collocations): Collocations take a singular verb. Compound Subject Taking a Singular Verb (Single Person or Unit): When the compound subject denotes one person or a single unit, it takes a singular verb.",
+            example: "Plural: A pencil and an eraser make writing easier. | Exception (Collocations): Her bread and butter is weaving handicrafts. | Single Person or Unit: The president of student council and editor-in-chief of the school paper speaks at the General Assembly."
+          },
+          {
+            name: "RULE #3a: SINGULAR INDEFINITE PRONOUNS",
+            desc: "Vocabulary Note: Either — maalin | Neither — wala sa kanila. Rule: A singular indefinite pronoun subject takes a singular verb. List: Each, either, neither, one, no one, nobody, nothing, anyone, anybody, anything, someone, something, somebody, everyone, everybody, everything.",
+            example: "Each one does a good deal of work around office."
+          },
+          {
+            name: "RULE 3B: PLURAL INDEFINITE PRONOUNS",
+            desc: "Rule: A plural indefinite pronoun subject takes a plural verb (2 or more). Always Plural: SEVERAL, FEW, BOTH. Depends on the \"of-phrase\": Many, all, some, none, most. EXEMPTED: Uncounted (uncountable) nouns stay with a singular (-s) verb.",
+            example: "Several students fail the exam. (Note from handwritten page: \"Several student fails the exam\") | Most of the officials join the trip."
+          },
+          {
+            name: "RULE 3C: COMPOUND SUBJECT JOINED BY OR / NOR",
+            desc: "Rule: The verb agrees with the subject nearer to it.",
+            example: "Neither the director nor the actors are following the lines closely. (Note from handwritten page: \"Neither the direct nor the actors are following the lines closely.\") | Neither the actors nor the director is following the lines closely."
+          }
+        ],
+        mnemonicTitle: "Pronoun Reference Table",
+        mnemonicHtml: `<table class="ref-table">
+          <thead><tr><th>Person</th><th>Singular</th><th>Plural</th></tr></thead>
+          <tbody>
+            <tr><td><strong>1st</strong></td><td>I</td><td>We</td></tr>
+            <tr><td><strong>2nd</strong></td><td>You</td><td>You</td></tr>
+            <tr><td><strong>3rd</strong></td><td>He, she, it</td><td>They</td></tr>
+          </tbody>
+        </table>`
+      },
+      {
+        id: "sec-sva-advanced",
+        topic: "Subject-Verb Agreement",
+        title: "SUBJECT-VERB AGREEMENT — Rules 4 to 12",
+        lead: "Advanced Subject-Verb Agreement rules and exact examples from the reviewer.",
+        rules: [
+          {
+            name: "RULE 4: INVERTED SUBJECT MUST AGREE WITH THE VERB",
+            desc: "Inverted subjects placed after the verb must agree with the verb.",
+            example: "Not only is he difficult to understand, but he is also funny. | Scarcely have they enough crops."
+          },
+          {
+            name: "RULE 5: COLLECTIVE NOUNS",
+            desc: "Rule: Collective nouns may either be singular or plural depending on their meaning.",
+            example: "The jury has awarded custody to the grandmother. (acting as one unit — singular) | The jury members have been arguing for five days. (acting as individuals — plural)"
+          },
+          {
+            name: "RULE 6: WORDS STATING AMOUNT OF MONEY, UNITS OF MEASUREMENT",
+            desc: "Rule: Words stating an amount of money or units of measurement are usually singular. Exception (\"of the\" phrase): However, if the words stating an amount are followed by an \"of the\" phrase, the verb agrees with the nouns or pronouns in said phrases.",
+            example: "Five kilograms equals eleven pounds. | One-fourth is never enough. | One hundred pesos is my allowance today. | Exception: One-fourth of the pizza is in the refrigerator. | One-fourth of the pizzas are in the refrigerator."
+          },
+          {
+            name: "RULE 7: TITLES OF SINGLE ENTITIES",
+            desc: "Rule: Titles of single entities (Books, Organizations, Countries, etc.) are always singular.",
+            example: "The Avengers is a blockbuster movie."
+          },
+          {
+            name: "RULE 8: PLURAL FORM SUBJECTS WITH A SINGULAR MEANING",
+            desc: "Rule: Plural form subjects with a singular meaning take a singular verb.",
+            example: "Mumps is a contagious disease. | Mathematics is a Waterloo for majority of them. | The scissors are on the table. (plural pair/item) | The pair of scissors is on the table. (singular \"pair\")"
+          },
+          {
+            name: "RULE 9: THE CLAUSE \"ONE OF THOSE ____ WHO\" vs. \"ONLY ONE OF THOSE ____ WHO\"",
+            desc: "Rule: The clause \"one of those ____ who\" takes a plural verb, while \"only one of those ____ who\" takes a singular verb.",
+            example: "Hannah is one of those people who like to read comic books. | Hannah is only one of those people who likes to read comic books."
+          },
+          {
+            name: "RULE 10: THE CLAUSE \"ONE OF THE\"",
+            desc: "Rule: The clause \"one of the\" takes a singular verb regardless of the phrase.",
+            example: "One of the participants bags the award."
+          },
+          {
+            name: "RULE 11: THE PHRASE \"THE NUMBER OF\" vs. \"A NUMBER OF\"",
+            desc: "Rule: The phrase \"the number of\" uses a singular verb, while \"a number of\" uses a plural verb.",
+            example: "The number of volunteers grows each year. | A number of volunteers grow tomatoes each summer."
+          },
+          {
+            name: "RULE 12: THE PHRASE \"EVERY ____\" AND \"MANY A ____\"",
+            desc: "Rule: The phrases \"every ____\" and \"many a ____\" use a singular verb.",
+            example: "Every man, woman, and child participates in life boat drill. | Many a child dreams becoming famous one day."
+          }
+        ]
+      }
+    ];
+
+    /* ==========================================================================
+       54 HIGH-YIELD FLASHCARDS DATASET (VERBATIM FROM REFERENCE DOCUMENT)
+       ========================================================================== */
+    const FLASHCARDS = [
+      { id: "fc01", topic: "Capitalization", q: "Capitalization: Titles before Personal Names", a: "Capitalize specific names of people, places, organizations, and brand names, including titles before personal names.", ex: "President Obama, Uncle Jerry, Doctor Smith" },
+      { id: "fc02", topic: "Capitalization", q: "Capitalization: Specific Geographical Locations vs. General Categories", a: "Capitalize specific, unique identifiers (Proper Nouns) and sentence starters. Do not capitalize general categories or common nouns (e.g., capitalize Mount Everest, but not mountain).", ex: "Tito's Taco Palace, New York City, Mount Everest" },
+      { id: "fc03", topic: "Capitalization", q: "Capitalization: Languages & Nationalities, Holidays, and Historical Eras", a: "Capitalize languages & nationalities, holidays & national observances, and historical eras & events.", ex: "French fries, Spanish moss, Brazilians, Egyptians | Thanksgiving, Halloween, Christmas | Old Kingdom, Renaissance, Middle Ages" },
+      { id: "fc04", topic: "Capitalization", q: "Capitalization: Pronoun \"I\"", a: "Always capitalized, regardless of its position in a sentence.", ex: "She and I went to the museum." },
+      { id: "fc05", topic: "Capitalization", q: "Capitalization: Organizations, Companies, and Brand & Product Names", a: "Capitalize specific names of organizations & institutions, companies & corporate entities, and brand & product names.", ex: "World Wildlife Fund, United Nations | Starbucks, Google, Microsoft | Oreo, Coca-Cola, IPhone" },
+      { id: "fc06", topic: "Punctuation & Sentence Types", q: "Declarative Sentence (.) vs. Imperative Sentence (.)", a: "Declarative Sentence (.) — Makes a statement or states a fact. Imperative Sentence (.) — Issues a command, direction, or request.", ex: "Declarative: She loves reading classic literature. | Imperative: Please close the door quietly." },
+      { id: "fc07", topic: "Punctuation & Sentence Types", q: "Interrogative Sentence (?) vs. Exclamatory Sentence (!)", a: "Interrogative Sentence (?) — Directs a formal question to the reader. Exclamatory Sentence (!) — Expresses strong emotion, surprise, or urgency.", ex: "Interrogative: Did you finish the English reviewer assignment? | Exclamatory: What an incredible performance that was!" },
+      { id: "fc08", topic: "Punctuation & Sentence Types", q: "Commas (,): Interrupting Material (Appositives / Non-essential Clauses)", a: "Enclose non-essential information with commas before and after.", ex: "My brother, who lives in New York, is visiting us tomorrow." },
+      { id: "fc09", topic: "Punctuation & Sentence Types", q: "Commas (,): Coordinating Conjunctions (FANBOYS)", a: "Combine two independent clauses using a comma followed by For, And, Nor, But, Or, Yet, or So.", ex: "I wanted to go for a walk, but it started raining heavily." },
+      { id: "fc10", topic: "Punctuation & Sentence Types", q: "Commas (,): Listing Items (Two items vs. Oxford Series)", a: "Separate individual items in a series: Two items take no comma; Three or more items use the Oxford Series.", ex: "Two items: Cats and dogs make great pets. | Three or more items (Oxford Series): I need apples, bananas, and oranges." },
+      { id: "fc11", topic: "Punctuation & Sentence Types", q: "Semicolons (;) vs. Colons (:)", a: "Semicolon (;): Connects closely related independent clauses. Rule: Do NOT use a semicolon to introduce a list. Colon (:): Introduces an expansion, list, or quotation. Rule: Place after a complete independent clause.", ex: "David is a talented dancer; he is also extremely funny. | Please bring the following items: a notebook, two pencils, and an eraser." },
+      { id: "fc12", topic: "Punctuation & Sentence Types", q: "Apostrophes ('): Possession (Ownership)", a: "Singular Nouns: Add 's. Plural Nouns ending in -s: Add ' after the existing 's'.", ex: "Singular Nouns: David's jacket | Plural Nouns ending in -s: the students' classroom" },
+      { id: "fc13", topic: "Punctuation & Sentence Types", q: "Apostrophes ('): Shortened", a: "Replaces missing characters when combining words.", ex: "she + had / she + would → she'd | cannot → can't | should + have → should've" },
+      { id: "fc14", topic: "Parts of Speech", q: "PARTS OF SPEECH: P - A - P - A - N - I - C - V - A", a: "P - Pronoun, A – Adjective, P - Preposition, A – Adverb, N - Noun, I - Interjection, C - Conjunction, V - Verb, A - Article.", ex: "PAPANICVA" },
+      { id: "fc15", topic: "Parts of Speech", q: "Concrete Noun vs. Abstract Noun", a: "Concrete Noun: Tangible elements perceived through the physical senses. Abstract Noun: Intangible concepts, emotions, or values.", ex: "Concrete: table, perfume, music, coffee | Abstract: freedom, honesty, love, courage, happiness" },
+      { id: "fc16", topic: "Parts of Speech", q: "Count Noun vs. Mass Noun", a: "Count Noun: Nouns capable of being counted individually. Mass Noun: Uncountable substances or broad concepts.", ex: "Count: one book, three chairs, ten students | Mass: water, rice, information, sugar, furniture" },
+      { id: "fc17", topic: "Parts of Speech", q: "Collective Noun", a: "Identifies a group acting as a single unit.", ex: "team, flock of birds, herd of cattle, committee" },
+      { id: "fc18", topic: "Parts of Speech", q: "Plural Nouns: Sibilant Endings (-s, -sh, -ch, -x, -z)", a: "Add -es.", ex: "class → classes, box → boxes, church → churches" },
+      { id: "fc19", topic: "Parts of Speech", q: "Plural Nouns: Ending in -f or -fe", a: "Change ending to -ve then add -s.", ex: "shelf → shelves, knife → knives, leaf → leaves" },
+      { id: "fc20", topic: "Parts of Speech", q: "Plural Nouns: Ending in -y (Preceded by Consonant vs. Preceded by Vowel)", a: "Preceded by Consonant: Change -y to -ies. Preceded by Vowel: Add -s.", ex: "Consonant: priority → priorities, city → cities, baby → babies | Vowel: boy → boys, key → keys, day → days" },
+      { id: "fc21", topic: "Parts of Speech", q: "Plural-Only Nouns", a: "Inherently plural entities taking plural verb forms.", ex: "clothes, pants, shorts, scissors, glasses" },
+      { id: "fc22", topic: "Parts of Speech", q: "Irregular Verbs (Base → Past → Past Participle)", a: "Modify internal vowels or change completely without fixed patterns.", ex: "go → went → gone | drink → drank → drunk | forgive → forgave → forgiven | come → came → come | forget → forgot → forgotten | find → found → found" },
+      { id: "fc23", topic: "Parts of Speech", q: "Linking Verbs vs. Helping Verbs", a: "Linking Verbs: Reconnect the subject to a subject complement (am, is, are, was, were, be, been, being). Helping Verbs: Support main verbs to clarify tense, mood, or voice (do, did, does, have, has, had, may, might, must, should, will).", ex: "Linking: She is an extraordinary scientist. | Helping: They were running late; she must have forgotten her key." },
+      { id: "fc24", topic: "Parts of Speech", q: "Transitive Verbs vs. Intransitive Verbs", a: "Transitive Verbs: Direct action toward a receiving direct object. Intransitive Verbs: Express action without requiring an object recipient.", ex: "Transitive: The chef baked a cake. (cake = direct object) | Intransitive: The baby slept peacefully. (No direct object present)" },
+      { id: "fc25", topic: "Sentence Structures & Clauses", q: "Compound Subject vs. Compound Predicate", a: "Compound Subject: Multiple subjects performing the same action. Compound Predicate: Multiple actions executed by the primary subject.", ex: "Compound Subject: David and Mark submitted their essays. | Compound Predicate: The puppy barked and ran across the yard." },
+      { id: "fc26", topic: "Sentence Structures & Clauses", q: "Warning: Avoid Fragments!", a: "A sentence fragment lacks a main subject, a complete verb, or an independent thought.", ex: "Fragment: Because it was raining outside. (Incomplete) | Corrected: Because it was raining outside, we stayed indoors. (Complete thought)" },
+      { id: "fc27", topic: "Sentence Structures & Clauses", q: "1. Simple Sentence (SS-SP, CS-SP, SS-CP, CS-CP)", a: "Contains 1 independent clause expressing a unified thought.", ex: "SS-SP: The dog barked. | CS-SP: The dog and the cat slept. | SS-CP: The dog barked and ran. | CS-CP: The dog and cat barked and ran." },
+      { id: "fc28", topic: "Sentence Structures & Clauses", q: "2. Compound Sentence", a: "Contains 2 or more independent clauses joined by a coordinating conjunction (FANBOYS) paired with a comma, or linked directly with a semicolon (;).", ex: "Example 1: She worked hard, so she passed the exam easily. | Example 2: The library was quiet; students were studying for finals." },
+      { id: "fc29", topic: "Sentence Structures & Clauses", q: "3. Complex Sentence", a: "Contains 1 independent clause linked to 1 or more dependent (subordinate) clauses using subordinating conjunctions (because, although, since, when, if).", ex: "Example 1: Although it was cold, we went for a stroll in the park. | Example 2: I will call you when I arrive at the station." },
+      { id: "fc30", topic: "Sentence Structures & Clauses", q: "4. Compound-Complex Sentence", a: "Contains 2 or more independent clauses combined with 1 or more dependent clauses.", ex: "Because the weather was bad, the flight was delayed, and many travelers were stranded at the airport." },
+      { id: "fc31", topic: "Subject-Verb Agreement", q: "SVA Basic Rule & Exempted! (Exceptions to Basic Rule)", a: "Plural verb: No -s ending. Singular subject (she, Bill, car) takes a singular verb (is, goes, shines). Exempted: \"I\" and \"You\" are singular subjects, but their verbs still take no -s.", ex: "I study (no -s) | You study (no -s)" },
+      { id: "fc32", topic: "Subject-Verb Agreement", q: "RULE 1: INTERVENING PHRASE OR CLAUSE", a: "The intervening phrase or clause between the subject and verb does not change the number of the subject.", ex: "A can of tuna beans sits on the shelf." },
+      { id: "fc33", topic: "Subject-Verb Agreement", q: "RULE 2: COMPOUND SUBJECTS JOINED BY \"AND\" (and Exceptions)", a: "Compound subjects joined by \"and\" are always plural. Exception (Collocations): Collocations take a singular verb. Single Person or Unit: When the compound subject denotes one person or a single unit, it takes a singular verb.", ex: "A pencil and an eraser make writing easier. | Her bread and butter is weaving handicrafts. | The president of student council and editor-in-chief of the school paper speaks at the General Assembly." },
+      { id: "fc34", topic: "Subject-Verb Agreement", q: "RULE #3a: SINGULAR INDEFINITE PRONOUNS (Vocabulary Note: Either / Neither)", a: "Vocabulary Note: Either — maalin | Neither — wala sa kanila. A singular indefinite pronoun subject takes a singular verb (Each, either, neither, one, no one, nobody, nothing, anyone, anybody, anything, someone, something, somebody, everyone, everybody, everything).", ex: "Each one does a good deal of work around office." },
+      { id: "fc35", topic: "Subject-Verb Agreement", q: "RULE 3B: PLURAL INDEFINITE PRONOUNS", a: "Always Plural: SEVERAL, FEW, BOTH. Depends on the \"of-phrase\": Many, all, some, none, most. EXEMPTED: Uncounted (uncountable) nouns stay with a singular (-s) verb.", ex: "Several students fail the exam. | Most of the officials join the trip." },
+      { id: "fc36", topic: "Subject-Verb Agreement", q: "RULE 3C: COMPOUND SUBJECT JOINED BY OR / NOR", a: "The verb agrees with the subject nearer to it.", ex: "Neither the director nor the actors are following the lines closely. | Neither the actors nor the director is following the lines closely." },
+      { id: "fc37", topic: "Subject-Verb Agreement", q: "RULE 4: INVERTED SUBJECT MUST AGREE WITH THE VERB", a: "When the subject appears in inverted order after the verb, it must still agree with the verb.", ex: "Not only is he difficult to understand, but he is also funny. | Scarcely have they enough crops." },
+      { id: "fc38", topic: "Subject-Verb Agreement", q: "RULE 5: COLLECTIVE NOUNS", a: "Collective nouns may either be singular or plural depending on their meaning.", ex: "The jury has awarded custody to the grandmother. (acting as one unit — singular) | The jury members have been arguing for five days. (acting as individuals — plural)" },
+      { id: "fc39", topic: "Subject-Verb Agreement", q: "RULE 6: WORDS STATING AMOUNT OF MONEY, UNITS OF MEASUREMENT", a: "Words stating an amount of money or units of measurement are usually singular. Exception (\"of the\" phrase): If followed by an \"of the\" phrase, the verb agrees with the nouns or pronouns in said phrases.", ex: "Five kilograms equals eleven pounds. | One-fourth is never enough. | One hundred pesos is my allowance today. | Exception: One-fourth of the pizza is in the refrigerator. | One-fourth of the pizzas are in the refrigerator." },
+      { id: "fc40", topic: "Subject-Verb Agreement", q: "RULE 7: TITLES OF SINGLE ENTITIES", a: "Titles of single entities (Books, Organizations, Countries, etc.) are always singular.", ex: "The Avengers is a blockbuster movie." },
+      { id: "fc41", topic: "Subject-Verb Agreement", q: "RULE 8: PLURAL FORM SUBJECTS WITH A SINGULAR MEANING", a: "Plural form subjects with a singular meaning take a singular verb.", ex: "Mumps is a contagious disease. | Mathematics is a Waterloo for majority of them. | The scissors are on the table. | The pair of scissors is on the table." },
+      { id: "fc42", topic: "Subject-Verb Agreement", q: "RULE 9: THE CLAUSE \"ONE OF THOSE ____ WHO\" vs. \"ONLY ONE OF THOSE ____ WHO\"", a: "The clause \"one of those ____ who\" takes a plural verb, while \"only one of those ____ who\" takes a singular verb.", ex: "Hannah is one of those people who like to read comic books. | Hannah is only one of those people who likes to read comic books." },
+      { id: "fc43", topic: "Subject-Verb Agreement", q: "RULE 10: THE CLAUSE \"ONE OF THE\"", a: "The clause \"one of the\" takes a singular verb regardless of the phrase.", ex: "One of the participants bags the award." },
+      { id: "fc44", topic: "Subject-Verb Agreement", q: "RULE 11: THE PHRASE \"THE NUMBER OF\" vs. \"A NUMBER OF\"", a: "The phrase \"the number of\" uses a singular verb, while \"a number of\" uses a plural verb.", ex: "The number of volunteers grows each year. | A number of volunteers grow tomatoes each summer." },
+      { id: "fc45", topic: "Subject-Verb Agreement", q: "RULE 12: THE PHRASE \"EVERY ____\" AND \"MANY A ____\"", a: "The phrases \"every ____\" and \"many a ____\" use a singular verb.", ex: "Every man, woman, and child participates in life boat drill. | Many a child dreams becoming famous one day." },
+      { id: "fc46", topic: "Capitalization", q: "Capitalization: Sentence Beginnings", a: "Every new sentence must start with a capital letter.", ex: "The weather is pleasant today." },
+      { id: "fc47", topic: "Punctuation & Sentence Types", q: "Commas (,): Two items vs. Three or more items (Oxford Series)", a: "Separate individual items in a series.", ex: "Two items: Cats and dogs make great pets. | Three or more items (Oxford Series): I need apples, bananas, and oranges." },
+      { id: "fc48", topic: "Parts of Speech", q: "Transitive Verbs Example & Direct Object", a: "Direct action toward a receiving direct object.", ex: "The chef baked a cake. (cake = direct object)" },
+      { id: "fc49", topic: "Parts of Speech", q: "Intransitive Verbs Example", a: "Express action without requiring an object recipient.", ex: "The baby slept peacefully. (No direct object present)" },
+      { id: "fc50", topic: "Sentence Structures & Clauses", q: "Compound Sentence with Semicolon (;)", a: "Contains 2 or more independent clauses joined by a coordinating conjunction (FANBOYS) paired with a comma, or linked directly with a semicolon (;).", ex: "The library was quiet; students were studying for finals." },
+      { id: "fc51", topic: "Sentence Structures & Clauses", q: "Complex Sentence with Subordinating Conjunction 'when'", a: "Contains 1 independent clause linked to 1 or more dependent (subordinate) clauses using subordinating conjunctions (because, although, since, when, if).", ex: "I will call you when I arrive at the station." },
+      { id: "fc52", topic: "Subject-Verb Agreement", q: "RULE 2 Exception (Collocations)", a: "Collocations take a singular verb.", ex: "Her bread and butter is weaving handicrafts." },
+      { id: "fc53", topic: "Subject-Verb Agreement", q: "RULE 4 Inverted Subject Example", a: "Inverted subject must agree with the verb.", ex: "Scarcely have they enough crops." },
+      { id: "fc54", topic: "Subject-Verb Agreement", q: "RULE 6 Exception (\"of the\" phrase)", a: "If the words stating an amount are followed by an \"of the\" phrase, the verb agrees with the nouns or pronouns in said phrases.", ex: "One-fourth of the pizza is in the refrigerator. | One-fourth of the pizzas are in the refrigerator." }
+    ];
+
+    /* ==========================================================================
+       125-ITEM MULTI-FORMAT MOCK EXAM DATASET (100% VERBATIM DOCUMENT TERMS & SAMPLES)
+       - Items 1–40:   Part I: Multiple Choice (40 items)
+       - Items 41–60:  Part II: True or False (20 items)
+       - Items 61–85:  Part III: Term & Rule Identification (25 items)
+       - Items 86–110: Part IV: Fill in the Blank (25 items)
+       - Items 111–125: Part V: Drag & Drop Matching Sets (15 items across 3 boards)
+       ========================================================================== */
+    const EXAM_QUESTIONS = [
+      // ===================== PART I: MULTIPLE CHOICE (1 - 40) =====================
+      { id: 1, type: "mc", topic: "Capitalization", prompt: "Which sentence follows standard capitalization rules for specific vs. general nouns?", options: ["We hiked up Mount Everest and admired the nearby Mountain.", "We hiked up mount Everest and admired the nearby mountain.", "We hiked up Mount Everest and admired the nearby mountain.", "We hiked up Mount everest and admired the nearby Mountain."], answer: "We hiked up Mount Everest and admired the nearby mountain.", explanation: "Capitalize specific unique identifiers (Mount Everest), but do not capitalize general common nouns (mountain)." },
+      { id: 2, type: "mc", topic: "Capitalization", prompt: "Which group of words is capitalized PROPERLY according to the reviewer?", options: ["French fries, Spanish moss, Brazilians, Egyptians", "french fries, Spanish moss, brazilians, Egyptians", "French Fries, Spanish Moss, Brazilians, egyptians", "French fries, spanish moss, Brazilians, Egyptians"], answer: "French fries, Spanish moss, Brazilians, Egyptians", explanation: "Languages and nationalities (French, Spanish, Brazilians, Egyptians) are capitalized, while common nouns like 'fries' and 'moss' stay lowercase." },
+      { id: 3, type: "mc", topic: "Capitalization", prompt: "Which sentence uses the pronoun 'I' and personal titles accurately?", options: ["Yesterday, uncle Jerry, Doctor Smith, and i visited New York City.", "Yesterday, Uncle Jerry, Doctor Smith, and I visited New York City.", "Yesterday, Uncle jerry, doctor Smith, and I visited New York city.", "Yesterday, Uncle Jerry, Doctor Smith, and I visited new york city."], answer: "Yesterday, Uncle Jerry, Doctor Smith, and I visited New York City.", explanation: "Titles before personal names (Uncle Jerry, Doctor Smith), specific locations (New York City), and the pronoun 'I' are always capitalized." },
+      { id: 4, type: "mc", topic: "Capitalization", prompt: "Identify the item that represents a Historical Era/Event requiring capitalization:", options: ["renaissance", "Middle Ages", "ancient century", "modern decade"], answer: "Middle Ages", explanation: "Historical eras and events such as Old Kingdom, Renaissance, and Middle Ages must be capitalized." },
+      { id: 5, type: "mc", topic: "Capitalization", prompt: "Which combination correctly capitalizes Organizations, Companies, and Holidays?", options: ["United Nations, Microsoft, Thanksgiving", "united nations, Microsoft, thanksgiving", "United Nations, microsoft, Thanksgiving", "United nations, Microsoft, Thanksgiving"], answer: "United Nations, Microsoft, Thanksgiving", explanation: "Organizations (United Nations), companies (Microsoft), and holidays (Thanksgiving) are all proper nouns." },
+      { id: 6, type: "mc", topic: "Capitalization", prompt: "Select the sentence with error-free capitalization:", options: ["She and I bought Oreo cookies and Coca-Cola at Starbucks.", "She and i bought Oreo cookies and coca-cola at Starbucks.", "She and I bought oreo cookies and Coca-Cola at starbucks.", "she and I bought Oreo cookies and Coca-Cola at Starbucks."], answer: "She and I bought Oreo cookies and Coca-Cola at Starbucks.", explanation: "Sentence starters, the pronoun 'I', brand names (Oreo, Coca-Cola), and corporate entities (Starbucks) are capitalized." },
+      { id: 7, type: "mc", topic: "Punctuation & Sentence Types", prompt: "Which sentence is an Imperative sentence?", options: ["Did you finish the English reviewer assignment?", "What an incredible performance that was!", "Please close the door quietly.", "She loves reading classic literature."], answer: "Please close the door quietly.", explanation: "An imperative sentence issues a command, direction, or polite request and typically ends with a period." },
+      { id: 8, type: "mc", topic: "Punctuation & Sentence Types", prompt: "Which sentence correctly uses commas around interrupting material (a non-essential clause)?", options: ["My brother who lives in New York, is visiting us tomorrow.", "My brother, who lives in New York is visiting us tomorrow.", "My brother, who lives in New York, is visiting us tomorrow.", "My brother who lives in New York is visiting us, tomorrow."], answer: "My brother, who lives in New York, is visiting us tomorrow.", explanation: "Non-essential clauses or appositives must be enclosed with commas both before and after." },
+      { id: 9, type: "mc", topic: "Punctuation & Sentence Types", prompt: "Which list demonstrates the proper use of the Oxford Series comma?", options: ["I need apples, bananas and oranges.", "I need apples, bananas, and oranges.", "I need, apples, bananas, and oranges.", "Cats, and dogs make great pets."], answer: "I need apples, bananas, and oranges.", explanation: "For three or more items, separate individual items with commas including before 'and'. Two items ('Cats and dogs') need no comma." },
+      { id: 10, type: "mc", topic: "Punctuation & Sentence Types", prompt: "Which sentence uses a semicolon (;) or colon (:) INCORRECTLY?", options: ["David is a talented dancer; he is also extremely funny.", "Please bring the following items: a notebook, two pencils, and an eraser.", "Please bring the following items; a notebook, two pencils, and an eraser.", "The library was quiet; students were studying for finals."], answer: "Please bring the following items; a notebook, two pencils, and an eraser.", explanation: "Rule: Do NOT use a semicolon to introduce a list; use a colon after a complete independent clause instead." },
+      { id: 11, type: "mc", topic: "Punctuation & Sentence Types", prompt: "How do you show possession for a plural noun ending in -s (e.g., students)?", options: ["the student's classroom", "the students' classroom", "the students's classroom", "the students classroom'"], answer: "the students' classroom", explanation: "For plural nouns ending in -s, add an apostrophe (') after the existing 's'." },
+      { id: 12, type: "mc", topic: "Punctuation & Sentence Types", prompt: "Which contraction expansion is accurate?", options: ["should've = should + of", "she'd = she + did", "can't = can + not", "they're = they + were"], answer: "can't = can + not", explanation: "cannot → can't; she + had / she + would → she'd; should + have → should've." },
+      { id: 13, type: "mc", topic: "Punctuation & Sentence Types", prompt: "Which sentence correctly joins two independent clauses using FANBOYS?", options: ["I wanted to go for a walk but, it started raining heavily.", "I wanted to go for a walk, but it started raining heavily.", "I wanted to go for a walk; but it started raining heavily.", "I wanted to go for a walk but it started raining heavily."], answer: "I wanted to go for a walk, but it started raining heavily.", explanation: "Combine two independent clauses using a comma followed by a coordinating conjunction (For, And, Nor, But, Or, Yet, So)." },
+      { id: 14, type: "mc", topic: "Parts of Speech", prompt: "In the acronym PAPANICVA, what do the two 'P's and two 'A's stand for?", options: ["Pronoun, Preposition, Adjective, Adverb, Article", "Participle, Pronoun, Adverb, Auxiliary", "Predicate, Preposition, Adjective, Appositive", "Pronoun, Proper Noun, Adverb, Article"], answer: "Pronoun, Preposition, Adjective, Adverb, Article", explanation: "PAPANICVA = Pronoun, Adjective, Preposition, Adverb, Noun, Interjection, Conjunction, Verb, Article." },
+      { id: 15, type: "mc", topic: "Parts of Speech", prompt: "Which set contains ONLY Abstract Nouns?", options: ["table, perfume, music, coffee", "freedom, honesty, love, courage, happiness", "team, flock, herd, committee", "water, rice, sugar, furniture"], answer: "freedom, honesty, love, courage, happiness", explanation: "Abstract nouns represent intangible concepts, emotions, or values." },
+      { id: 16, type: "mc", topic: "Parts of Speech", prompt: "Which noun is a Mass (uncountable) Noun?", options: ["chair", "student", "information", "book"], answer: "information", explanation: "Water, rice, information, sugar, and furniture are mass (uncountable) nouns." },
+      { id: 17, type: "mc", topic: "Parts of Speech", prompt: "Which plural transformation follows the Vowel + -y rule?", options: ["priority → priorities", "city → cities", "key → keys", "baby → babies"], answer: "key → keys", explanation: "When a noun ends in -y preceded by a vowel (boy, key, day), simply add -s." },
+      { id: 18, type: "mc", topic: "Parts of Speech", prompt: "Which set lists Plural-Only Nouns that inherently take plural verb forms?", options: ["clothes, pants, shorts, scissors, glasses", "news, mumps, mathematics, measles", "furniture, rice, sugar, water", "committee, jury, team, flock"], answer: "clothes, pants, shorts, scissors, glasses", explanation: "Clothes, pants, shorts, scissors, and glasses are inherently plural entities taking plural verb forms." },
+      { id: 19, type: "mc", topic: "Parts of Speech", prompt: "Which irregular verb triplet (Base → Past → Past Participle) is correct?", options: ["drink → drunk → drank", "forgive → forgave → forgiven", "forget → forgotted → forgotten", "come → came → came"], answer: "forgive → forgave → forgiven", explanation: "Correct irregular forms: drink-drank-drunk, forgive-forgave-forgiven, forget-forgot-forgotten, come-came-come." },
+      { id: 20, type: "mc", topic: "Parts of Speech", prompt: "What type of verb is 'is' in the sentence: 'She is an extraordinary scientist'?", options: ["Transitive Action Verb", "Linking Verb", "Helping Verb", "Intransitive Action Verb"], answer: "Linking Verb", explanation: "Primary 'be' forms (am, is, are, was, were, be, been, being) act as linking verbs when reconnecting the subject to a subject complement." },
+      { id: 21, type: "mc", topic: "Parts of Speech", prompt: "In 'The chef baked a cake', why is 'baked' classified as a transitive verb?", options: ["It shows a state of being.", "It is preceded by a helping verb.", "It directs action toward a receiving direct object ('a cake').", "It requires no object recipient."], answer: "It directs action toward a receiving direct object ('a cake').", explanation: "Transitive verbs transfer action to a direct object ('a cake')." },
+      { id: 22, type: "mc", topic: "Sentence Structures & Clauses", prompt: "Identify the sentence structure: 'The dog and cat barked and ran.'", options: ["Simple Sentence (CS-CP)", "Compound Sentence", "Complex Sentence", "Compound-Complex Sentence"], answer: "Simple Sentence (CS-CP)", explanation: "It contains 1 independent clause with a Compound Subject ('The dog and cat') and Compound Predicate ('barked and ran')." },
+      { id: 23, type: "mc", topic: "Sentence Structures & Clauses", prompt: "Which of the following is a Sentence Fragment?", options: ["We stayed indoors.", "Because it was raining outside.", "Because it was raining outside, we stayed indoors.", "The dog barked."], answer: "Because it was raining outside.", explanation: "'Because it was raining outside' is a dependent clause lacking a main independent clause." },
+      { id: 24, type: "mc", topic: "Sentence Structures & Clauses", prompt: "Classify: 'Although it was cold, we went for a stroll in the park.'", options: ["Simple Sentence", "Compound Sentence", "Complex Sentence", "Compound-Complex Sentence"], answer: "Complex Sentence", explanation: "1 dependent clause ('Although it was cold') + 1 independent clause ('we went for a stroll in the park') = Complex Sentence." },
+      { id: 25, type: "mc", topic: "Sentence Structures & Clauses", prompt: "Classify: 'Because the weather was bad, the flight was delayed, and many travelers were stranded at the airport.'", options: ["Simple Sentence", "Compound Sentence", "Complex Sentence", "Compound-Complex Sentence"], answer: "Compound-Complex Sentence", explanation: "Contains 1 dependent clause ('Because the weather was bad') + 2 independent clauses ('the flight was delayed' and 'many travelers were stranded...')." },
+      { id: 26, type: "mc", topic: "Sentence Structures & Clauses", prompt: "Classify: 'She worked hard, so she passed the exam easily.'", options: ["Simple Sentence", "Compound Sentence", "Complex Sentence", "Compound-Complex Sentence"], answer: "Compound Sentence", explanation: "Two independent clauses joined by a comma and coordinating conjunction ('so') form a Compound Sentence." },
+      { id: 27, type: "mc", topic: "Subject-Verb Agreement", prompt: "Why do 'I study' and 'You study' have no -s on the verb?", options: ["They are plural subjects.", "They are singular subjects exempted from the -s rule.", "They are collective nouns.", "They follow Rule 4 inverted syntax."], answer: "They are singular subjects exempted from the -s rule.", explanation: "Exempted from Basic Rule: 'I' and 'You' are singular subjects, but their verbs take no -s." },
+      { id: 28, type: "mc", topic: "Subject-Verb Agreement", prompt: "Apply SVA Rule 1: 'A can of tuna beans _____ on the shelf.'", options: ["sit", "sits", "are sitting", "were sitting"], answer: "sits", explanation: "Rule 1: The intervening phrase 'of tuna beans' does not change the singular subject 'A can' → 'sits'." },
+      { id: 29, type: "mc", topic: "Subject-Verb Agreement", prompt: "Apply SVA Rule 2 (Collocation Exception): 'Her bread and butter _____ weaving handicrafts.'", options: ["are", "were", "is", "have been"], answer: "is", explanation: "Rule 2 Exception: Collocations like 'bread and butter' take a singular verb ('is')." },
+      { id: 30, type: "mc", topic: "Subject-Verb Agreement", prompt: "Apply SVA Rule 2 (Single Person Exception): 'The president of student council and editor-in-chief of the school paper _____ at the General Assembly.'", options: ["speak", "speaks", "are speaking", "have spoken"], answer: "speaks", explanation: "When a compound subject denotes one single person (notice no second 'the'), it takes a singular verb ('speaks')." },
+      { id: 31, type: "mc", topic: "Subject-Verb Agreement", prompt: "Apply SVA Rule 3a: 'Each one _____ a good deal of work around office.'", options: ["do", "does", "have done", "are doing"], answer: "does", explanation: "Rule 3a: Singular indefinite pronouns ('Each', 'Each one') take a singular verb ('does')." },
+      { id: 32, type: "mc", topic: "Subject-Verb Agreement", prompt: "Apply SVA Rule 3c: 'Neither the actors nor the director _____ following the lines closely.'", options: ["are", "were", "is", "have been"], answer: "is", explanation: "Rule 3c: With 'or/nor', the verb agrees with the nearer subject ('the director' = singular → 'is')." },
+      { id: 33, type: "mc", topic: "Subject-Verb Agreement", prompt: "Apply SVA Rule 4: 'Scarcely _____ they enough crops.'", options: ["has", "have", "is", "was"], answer: "have", explanation: "Rule 4 (Inverted Subject): The post-verbal subject 'they' is plural, requiring 'have'." },
+      { id: 34, type: "mc", topic: "Subject-Verb Agreement", prompt: "Apply SVA Rule 5: 'The jury members _____ been arguing for five days.'", options: ["has", "have", "is", "was"], answer: "have", explanation: "Rule 5: When collective noun members act as separate individuals ('jury members'), use a plural verb ('have')." },
+      { id: 35, type: "mc", topic: "Subject-Verb Agreement", prompt: "Apply SVA Rule 6 Exception: 'One-fourth of the pizzas _____ in the refrigerator.'", options: ["is", "was", "are", "has been"], answer: "are", explanation: "Rule 6 Exception: When a fraction is followed by an 'of the' phrase, the verb agrees with the noun in the phrase ('pizzas' → 'are')." },
+      { id: 36, type: "mc", topic: "Subject-Verb Agreement", prompt: "Apply SVA Rule 7 & 8: Which sentence is grammatically CORRECT?", options: ["The Avengers are a blockbuster movie.", "Mumps are a contagious disease.", "The pair of scissors is on the table.", "Mathematics are a Waterloo for majority of them."], answer: "The pair of scissors is on the table.", explanation: "Rule 7: Titles ('The Avengers') are singular. Rule 8: 'Mumps' and 'Mathematics' are singular; 'The pair of scissors' takes 'is'." },
+      { id: 37, type: "mc", topic: "Subject-Verb Agreement", prompt: "Apply SVA Rule 9: 'Hannah is only one of those people who _____ to read comic books.'", options: ["like", "likes", "have liked", "are liking"], answer: "likes", explanation: "Rule 9: 'Only one of those ____ who' takes a singular verb ('likes'), whereas 'one of those ____ who' takes a plural verb ('like')." },
+      { id: 38, type: "mc", topic: "Subject-Verb Agreement", prompt: "Apply SVA Rule 10: 'One of the participants _____ the award.'", options: ["bag", "bags", "have bagged", "are bagging"], answer: "bags", explanation: "Rule 10: 'One of the' takes a singular verb ('bags') regardless of the plural noun 'participants'." },
+      { id: 39, type: "mc", topic: "Subject-Verb Agreement", prompt: "Apply SVA Rule 11: 'A number of volunteers _____ tomatoes each summer.'", options: ["grows", "grow", "has grown", "is growing"], answer: "grow", explanation: "Rule 11: 'A number of' takes a plural verb ('grow'); 'The number of' takes a singular verb ('grows')." },
+      { id: 40, type: "mc", topic: "Subject-Verb Agreement", prompt: "Apply SVA Rule 12: 'Many a child _____ becoming famous one day.'", options: ["dream", "dreams", "have dreamed", "are dreaming"], answer: "dreams", explanation: "Rule 12: The phrases 'Every ____' and 'Many a ____' always take a singular verb ('dreams')." },
+
+      // ===================== PART II: TRUE OR FALSE (41 - 60) =====================
+      { id: 41, type: "tf", topic: "Capitalization", prompt: "True or False: You should capitalize general categories or common nouns such as 'mountain' in addition to specific identifiers like 'Mount Everest'.", answer: "False", explanation: "False — Key Takeaway: Capitalize specific, unique identifiers (Proper Nouns) and sentence starters. Do not capitalize general categories or common nouns (e.g., capitalize Mount Everest, but not mountain)." },
+      { id: 42, type: "tf", topic: "Capitalization", prompt: "True or False: The pronoun 'I' is always capitalized, regardless of its position in a sentence.", answer: "True", explanation: "True — Pronoun \"I\": Always capitalized, regardless of its position in a sentence (Example: She and I went to the museum.)." },
+      { id: 43, type: "tf", topic: "Capitalization", prompt: "True or False: Titles before personal names such as 'President Obama', 'Uncle Jerry', and 'Doctor Smith' must be capitalized.", answer: "True", explanation: "True — Titles before Personal Names: President Obama, Uncle Jerry, Doctor Smith." },
+      { id: 44, type: "tf", topic: "Punctuation & Sentence Types", prompt: "True or False: You should use a semicolon (;) to introduce an expansion, list, or quotation after a complete independent clause.", answer: "False", explanation: "False — Semicolon (;): Do NOT use a semicolon to introduce a list. Use a Colon (:) after a complete independent clause to introduce an expansion, list, or quotation." },
+      { id: 45, type: "tf", topic: "Punctuation & Sentence Types", prompt: "True or False: An Imperative Sentence (.) issues a command, direction, or request, such as 'Please close the door quietly.'", answer: "True", explanation: "True — Imperative Sentence (.) — Issues a command, direction, or request. Example: Please close the door quietly." },
+      { id: 46, type: "tf", topic: "Punctuation & Sentence Types", prompt: "True or False: For plural nouns ending in -s, you form possession by adding 's after the existing 's' (e.g., 'the students's classroom').", answer: "False", explanation: "False — Plural Nouns ending in -s: Add ' after the existing 's' (e.g., the students' classroom)." },
+      { id: 47, type: "tf", topic: "Punctuation & Sentence Types", prompt: "True or False: When listing two items such as 'Cats and dogs make great pets.', no comma is needed between the two items.", answer: "True", explanation: "True — Two items: Cats and dogs make great pets. Three or more items use the Oxford Series comma." },
+      { id: 48, type: "tf", topic: "Parts of Speech", prompt: "True or False: In PAPANICVA, the letters stand for Pronoun, Adjective, Preposition, Adverb, Noun, Interjection, Conjunction, Verb, and Article.", answer: "True", explanation: "True — P - Pronoun, A – Adjective, P - Preposition, A – Adverb, N - Noun, I - Interjection, C - Conjunction, V - Verb, A - Article." },
+      { id: 49, type: "tf", topic: "Parts of Speech", prompt: "True or False: Words like 'water', 'rice', 'information', 'sugar', and 'furniture' are classified as Count Nouns.", answer: "False", explanation: "False — Mass Noun: Uncountable substances or broad concepts (water, rice, information, sugar, furniture)." },
+      { id: 50, type: "tf", topic: "Parts of Speech", prompt: "True or False: Nouns ending in -y preceded by a vowel (such as 'boy', 'key', 'day') form their plural by adding -s.", answer: "True", explanation: "True — Ending in -y (Preceded by Vowel): Add -s (boy → boys, key → keys, day → days)." },
+      { id: 51, type: "tf", topic: "Parts of Speech", prompt: "True or False: Intransitive verbs direct action toward a receiving direct object, as shown in 'The chef baked a cake.'", answer: "False", explanation: "False — Transitive Verbs direct action toward a receiving direct object ('The chef baked a cake.'). Intransitive Verbs express action without requiring an object recipient ('The baby slept peacefully.')." },
+      { id: 52, type: "tf", topic: "Sentence Structures & Clauses", prompt: "True or False: 'Because it was raining outside.' is a complete Simple Sentence.", answer: "False", explanation: "False — Fragment: Because it was raining outside. (Incomplete). Corrected: Because it was raining outside, we stayed indoors. (Complete thought)." },
+      { id: 53, type: "tf", topic: "Sentence Structures & Clauses", prompt: "True or False: A Simple Sentence can have a Compound Subject and a Compound Predicate (CS-CP), such as 'The dog and cat barked and ran.'", answer: "True", explanation: "True — Simple Sentence contains 1 independent clause expressing a unified thought, including CS-CP: The dog and cat barked and ran." },
+      { id: 54, type: "tf", topic: "Sentence Structures & Clauses", prompt: "True or False: A Compound-Complex Sentence contains 2 or more independent clauses combined with 1 or more dependent clauses.", answer: "True", explanation: "True — Compound-Complex Sentence: Contains 2 or more independent clauses combined with 1 or more dependent clauses." },
+      { id: 55, type: "tf", topic: "Subject-Verb Agreement", prompt: "True or False: Under SVA Rule 1, the intervening phrase or clause between the subject and verb changes the number of the subject.", answer: "False", explanation: "False — RULE 1: The intervening phrase or clause between the subject and verb does not change the number of the subject (Example: A can of tuna beans sits on the shelf.)." },
+      { id: 56, type: "tf", topic: "Subject-Verb Agreement", prompt: "True or False: Under SVA Rule 2, collocations such as 'Her bread and butter is weaving handicrafts.' take a singular verb.", answer: "True", explanation: "True — Exception (Collocations): Collocations take a singular verb (Example: Her bread and butter is weaving handicrafts.)." },
+      { id: 57, type: "tf", topic: "Subject-Verb Agreement", prompt: "True or False: In SVA Rule #3a, 'Either' means 'wala sa kanila' and 'Neither' means 'maalin'.", answer: "False", explanation: "False — Vocabulary Note: Either — maalin | Neither — wala sa kanila." },
+      { id: 58, type: "tf", topic: "Subject-Verb Agreement", prompt: "True or False: Under SVA Rule 3C, when a compound subject is joined by OR / NOR, the verb agrees with the subject nearer to it.", answer: "True", explanation: "True — RULE 3C: The verb agrees with the subject nearer to it." },
+      { id: 59, type: "tf", topic: "Subject-Verb Agreement", prompt: "True or False: Under SVA Rule 7, titles of single entities (Books, Organizations, Countries, etc.) such as 'The Avengers' are always singular.", answer: "True", explanation: "True — RULE 7: Titles of single entities (Books, Organizations, Countries, etc.) are always singular (Example: The Avengers is a blockbuster movie.)." },
+      { id: 60, type: "tf", topic: "Subject-Verb Agreement", prompt: "True or False: Under SVA Rule 11, the phrase 'a number of' uses a singular verb, while 'the number of' uses a plural verb.", answer: "False", explanation: "False — RULE 11: The phrase 'the number of' uses a singular verb ('The number of volunteers grows each year.'), while 'a number of' uses a plural verb ('A number of volunteers grow tomatoes each summer.')." },
+
+      // ===================== PART III: TERM & RULE IDENTIFICATION (61 - 85) =====================
+      { id: 61, type: "id", topic: "Capitalization", prompt: "Identify the noun classification that names specific, unique entities requiring capitalization (e.g., Mount Everest, Starbucks, Renaissance):", answers: ["proper noun", "proper nouns", "proper"], explanation: "Proper Nouns identify specific people, places, organizations, brands, holidays, and eras." },
+      { id: 62, type: "id", topic: "Capitalization", prompt: "Identify the single personal pronoun that must ALWAYS be capitalized regardless of its position in a sentence:", answers: ["i", "pronoun i", "the pronoun i"], explanation: "The pronoun 'I' is always capitalized." },
+      { id: 63, type: "id", topic: "Punctuation & Sentence Types", prompt: "Identify the sentence type by purpose that makes a statement or states a fact and ends with a period (e.g., 'She loves reading classic literature.'):", answers: ["declarative", "declarative sentence"], explanation: "A Declarative Sentence makes a statement or states a fact." },
+      { id: 64, type: "id", topic: "Punctuation & Sentence Types", prompt: "Identify the sentence type by purpose that directs a formal question to the reader and ends with (?):", answers: ["interrogative", "interrogative sentence"], explanation: "An Interrogative Sentence asks a formal question." },
+      { id: 65, type: "id", topic: "Punctuation & Sentence Types", prompt: "Identify the sentence type by purpose that issues a command, direction, or request (e.g., 'Please close the door quietly.'):", answers: ["imperative", "imperative sentence"], explanation: "An Imperative Sentence issues a command, direction, or request." },
+      { id: 66, type: "id", topic: "Punctuation & Sentence Types", prompt: "Identify the sentence type by purpose that expresses strong emotion, surprise, or urgency (!):", answers: ["exclamatory", "exclamatory sentence"], explanation: "An Exclamatory Sentence expresses strong emotion, surprise, or urgency." },
+      { id: 67, type: "id", topic: "Punctuation & Sentence Types", prompt: "Identify the 7-letter mnemonic for coordinating conjunctions (For, And, Nor, But, Or, Yet, So):", answers: ["fanboys"], explanation: "FANBOYS stands for For, And, Nor, But, Or, Yet, So." },
+      { id: 68, type: "id", topic: "Punctuation & Sentence Types", prompt: "Identify the punctuation mark used to introduce an expansion, list, or quotation after a complete independent clause:", answers: ["colon", "colons", ":"], explanation: "A Colon (:) introduces an expansion, list, or quotation after a complete independent clause." },
+      { id: 69, type: "id", topic: "Parts of Speech", prompt: "Identify the 9-letter acronym representing Pronoun, Adjective, Preposition, Adverb, Noun, Interjection, Conjunction, Verb, Article:", answers: ["papanicva"], explanation: "PAPANICVA is the 9-part acronym for the Parts of Speech." },
+      { id: 70, type: "id", topic: "Parts of Speech", prompt: "Identify the noun type that names tangible elements perceived through the physical senses (e.g., table, perfume, music, coffee):", answers: ["concrete noun", "concrete nouns", "concrete"], explanation: "Concrete Nouns are perceived through the physical senses." },
+      { id: 71, type: "id", topic: "Parts of Speech", prompt: "Identify the noun type that names intangible concepts, emotions, or values (e.g., freedom, honesty, love, courage):", answers: ["abstract noun", "abstract nouns", "abstract"], explanation: "Abstract Nouns represent intangible concepts, emotions, or values." },
+      { id: 72, type: "id", topic: "Parts of Speech", prompt: "Identify the noun type that names a group acting as a single unit (e.g., team, flock of birds, herd of cattle, committee):", answers: ["collective noun", "collective nouns", "collective"], explanation: "Collective Nouns identify a group acting as a single unit." },
+      { id: 73, type: "id", topic: "Parts of Speech", prompt: "Identify the verb type that reconnects the subject to a subject complement (e.g., am, is, are, was, were, be, been, being):", answers: ["linking verb", "linking verbs", "linking"], explanation: "Linking Verbs reconnect the subject to a subject complement." },
+      { id: 74, type: "id", topic: "Parts of Speech", prompt: "Identify the verb type that supports a main verb to clarify tense, mood, or voice (e.g., do, did, have, must, should, will):", answers: ["helping verb", "helping verbs", "helping", "auxiliary verb"], explanation: "Helping Verbs support main verbs to clarify tense, mood, or voice." },
+      { id: 75, type: "id", topic: "Parts of Speech", prompt: "Identify the verb type that expresses action WITHOUT requiring a direct object recipient (e.g., 'The baby slept peacefully.'):", answers: ["intransitive verb", "intransitive verbs", "intransitive"], explanation: "Intransitive Verbs express action without requiring a direct object." },
+      { id: 76, type: "id", topic: "Sentence Structures & Clauses", prompt: "Identify the grammatical error where a group of words lacks a main subject, complete verb, or independent thought (e.g., 'Because it was raining outside.'):", answers: ["fragment", "sentence fragment", "fragments"], explanation: "A Sentence Fragment is an incomplete thought missing a main subject, complete verb, or independent clause." },
+      { id: 77, type: "id", topic: "Sentence Structures & Clauses", prompt: "Identify the sentence structure containing 1 independent clause (patterns: SS-SP, CS-SP, SS-CP, CS-CP):", answers: ["simple", "simple sentence"], explanation: "A Simple Sentence contains 1 independent clause." },
+      { id: 78, type: "id", topic: "Sentence Structures & Clauses", prompt: "Identify the sentence structure containing 2 or more independent clauses joined by comma + FANBOYS or a semicolon (;):", answers: ["compound", "compound sentence"], explanation: "A Compound Sentence contains 2+ independent clauses joined by comma + FANBOYS or a semicolon." },
+      { id: 79, type: "id", topic: "Sentence Structures & Clauses", prompt: "Identify the sentence structure containing 1 independent clause linked to 1 or more dependent clauses via subordinating conjunctions:", answers: ["complex", "complex sentence"], explanation: "A Complex Sentence contains 1 independent clause and 1+ dependent clauses." },
+      { id: 80, type: "id", topic: "Sentence Structures & Clauses", prompt: "Identify the sentence structure containing 2 or more independent clauses combined with 1 or more dependent clauses:", answers: ["compound-complex", "compound complex", "compound-complex sentence", "compound complex sentence"], explanation: "A Compound-Complex Sentence combines 2+ independent clauses with 1+ dependent clauses." },
+      { id: 81, type: "id", topic: "Subject-Verb Agreement", prompt: "Identify the SVA Rule demonstrated by: 'A can of tuna beans sits on the shelf.' (Words in the middle do not change subject number):", answers: ["rule 1", "intervening phrase", "intervening phrase or clause", "rule 1: intervening phrase or clause"], explanation: "SVA Rule 1: Intervening Phrase or Clause." },
+      { id: 82, type: "id", topic: "Subject-Verb Agreement", prompt: "Identify the linguistic term for fixed word pairings like 'bread and butter' that act as one unit and take a singular verb under SVA Rule 2:", answers: ["collocation", "collocations"], explanation: "Collocations (e.g., 'bread and butter') take a singular verb under SVA Rule 2." },
+      { id: 83, type: "id", topic: "Subject-Verb Agreement", prompt: "Identify the SVA Rule demonstrated by: 'Scarcely have they enough crops.' (Subject placed after the verb):", answers: ["rule 4", "inverted subject", "rule 4: inverted subject"], explanation: "SVA Rule 4: Inverted Subject must agree with the verb." },
+      { id: 84, type: "id", topic: "Subject-Verb Agreement", prompt: "Identify the SVA Rule demonstrated by: 'The Avengers is a blockbuster movie.'", answers: ["rule 7", "titles of single entities", "rule 7: titles of single entities"], explanation: "SVA Rule 7: Titles of Single Entities are always singular." },
+      { id: 85, type: "id", topic: "Subject-Verb Agreement", prompt: "Identify the SVA Rule demonstrated by: 'Mumps is a contagious disease' and 'Mathematics is a Waterloo for majority of them.'", answers: ["rule 8", "plural form subjects with a singular meaning", "rule 8: plural form subjects with a singular meaning"], explanation: "SVA Rule 8: Plural Form Subjects with a Singular Meaning take a singular verb." },
+
+      // ===================== PART IV: FILL IN THE BLANK (86 - 110) =====================
+      { id: 86, type: "fib", topic: "Capitalization", prompt: "Fill in the properly capitalized noun: 'She and _____ went to the museum.'", answers: ["I"], explanation: "The pronoun 'I' is always capitalized regardless of position." },
+      { id: 87, type: "fib", topic: "Capitalization", prompt: "Correct the capitalization of the specific geographical location in: 'We visited mount everest last year.' → 'We visited _____ last year.'", answers: ["Mount Everest"], explanation: "Specific geographical locations like Mount Everest must be capitalized." },
+      { id: 88, type: "fib", topic: "Capitalization", prompt: "Correct the capitalization of the historical era in: 'Art flourished during the renaissance.' → 'Art flourished during the _____.'", answers: ["Renaissance"], explanation: "Historical eras such as Old Kingdom, Renaissance, and Middle Ages are capitalized." },
+      { id: 89, type: "fib", topic: "Punctuation & Sentence Types", prompt: "Write the contraction for 'should + have' from the reviewer:", answers: ["should've"], explanation: "should + have → should've." },
+      { id: 90, type: "fib", topic: "Punctuation & Sentence Types", prompt: "Write the possessive form of the plural noun 'students' in: 'the _____ classroom'", answers: ["students'"], explanation: "For plural nouns ending in -s, add an apostrophe after the existing 's' (students')." },
+      { id: 91, type: "fib", topic: "Punctuation & Sentence Types", prompt: "Insert the missing punctuation mark after 'items': 'Please bring the following items_____ a notebook, two pencils, and an eraser.'", answers: [":"], explanation: "Use a colon (:) after a complete independent clause to introduce a list." },
+      { id: 92, type: "fib", topic: "Parts of Speech", prompt: "Form the plural of 'shelf' according to the -f/-fe rule:", answers: ["shelves"], explanation: "Ending in -f or -fe: change to -ve and add -s (shelf → shelves)." },
+      { id: 93, type: "fib", topic: "Parts of Speech", prompt: "Form the plural of 'priority' according to the consonant + -y rule:", answers: ["priorities"], explanation: "Ending in -y preceded by a consonant: change -y to -ies (priority → priorities)." },
+      { id: 94, type: "fib", topic: "Parts of Speech", prompt: "Form the plural of 'church' according to the sibilant ending rule:", answers: ["churches"], explanation: "Sibilant endings (-s, -sh, -ch, -x, -z) add -es (church → churches)." },
+      { id: 95, type: "fib", topic: "Parts of Speech", prompt: "Complete the irregular verb principal parts: 'drink → drank → _____'", answers: ["drunk"], explanation: "Irregular verb pattern: drink → drank → drunk." },
+      { id: 96, type: "fib", topic: "Parts of Speech", prompt: "Complete the irregular verb principal parts: 'forget → forgot → _____'", answers: ["forgotten"], explanation: "Irregular verb pattern: forget → forgot → forgotten." },
+      { id: 97, type: "fib", topic: "Parts of Speech", prompt: "In PAPANICVA, the letter 'I' stands for _____.", answers: ["interjection", "interjections"], explanation: "P-A-P-A-N-I-C-V-A: I = Interjection." },
+      { id: 98, type: "fib", topic: "Sentence Structures & Clauses", prompt: "Complete the compound sentence with the proper FANBOYS conjunction from the reviewer: 'She worked hard, _____ she passed the exam easily.'", answers: ["so"], explanation: "Example from reviewer: 'She worked hard, so she passed the exam easily.'" },
+      { id: 99, type: "fib", topic: "Sentence Structures & Clauses", prompt: "Complete the complex sentence with the subordinating conjunction from the reviewer: '_____ it was cold, we went for a stroll in the park.'", answers: ["Although", "although"], explanation: "Example from reviewer: 'Although it was cold, we went for a stroll in the park.'" },
+      { id: 100, type: "fib", topic: "Subject-Verb Agreement", prompt: "Fill in the correct verb form (SVA Basic Rule Exemption): 'You _____ (study) every night.'", answers: ["study"], explanation: "'You' is a singular subject exempted from the -s rule: 'You study'." },
+      { id: 101, type: "fib", topic: "Subject-Verb Agreement", prompt: "Fill in the correct verb (SVA Rule 2): 'A pencil and an eraser _____ (make) writing easier.'", answers: ["make"], explanation: "Rule 2: Compound subjects joined by 'and' are plural → 'make'." },
+      { id: 102, type: "fib", topic: "Subject-Verb Agreement", prompt: "Fill in the correct verb (SVA Rule 3b): 'Several students _____ (fail) the exam.'", answers: ["fail"], explanation: "Rule 3b: 'Several' is always a plural indefinite pronoun → 'fail'." },
+      { id: 103, type: "fib", topic: "Subject-Verb Agreement", prompt: "Fill in the correct verb (SVA Rule 3c): 'Neither the director nor the actors _____ (be: are/is) following the lines closely.'", answers: ["are"], explanation: "Rule 3c: Verb agrees with the nearer subject ('the actors' = plural → 'are')." },
+      { id: 104, type: "fib", topic: "Subject-Verb Agreement", prompt: "Fill in the correct verb (SVA Rule 4): 'Not only _____ (be: is/are) he difficult to understand, but he is also funny.'", answers: ["is"], explanation: "Rule 4: Inverted subject 'he' is singular → 'is'." },
+      { id: 105, type: "fib", topic: "Subject-Verb Agreement", prompt: "Fill in the correct verb (SVA Rule 5): 'The jury _____ (has/have) awarded custody to the grandmother.'", answers: ["has"], explanation: "Rule 5: Collective noun acting as one unit → singular 'has'." },
+      { id: 106, type: "fib", topic: "Subject-Verb Agreement", prompt: "Fill in the correct verb (SVA Rule 6): 'Five kilograms _____ (equal) eleven pounds.'", answers: ["equals"], explanation: "Rule 6: Units of measurement are usually singular → 'equals'." },
+      { id: 107, type: "fib", topic: "Subject-Verb Agreement", prompt: "Fill in the correct verb (SVA Rule 6 Exception): 'One-fourth of the pizza _____ (is/are) in the refrigerator.'", answers: ["is"], explanation: "Rule 6 Exception: 'pizza' is singular in the 'of the' phrase → 'is'." },
+      { id: 108, type: "fib", topic: "Subject-Verb Agreement", prompt: "Fill in the correct verb (SVA Rule 9): 'Hannah is one of those people who _____ (like) to read comic books.'", answers: ["like"], explanation: "Rule 9: 'one of those ____ who' takes a plural verb → 'like'." },
+      { id: 109, type: "fib", topic: "Subject-Verb Agreement", prompt: "Fill in the correct verb (SVA Rule 11): 'The number of volunteers _____ (grow) each year.'", answers: ["grows"], explanation: "Rule 11: 'The number of' takes a singular verb → 'grows'." },
+      { id: 110, type: "fib", topic: "Subject-Verb Agreement", prompt: "Fill in the correct verb (SVA Rule 12): 'Every man, woman, and child _____ (participate) in life boat drill.'", answers: ["participates"], explanation: "Rule 12: 'Every ____' always takes a singular verb → 'participates'." },
+
+      // ===================== PART V: DRAG & DROP MATCHING SETS (111 - 125) =====================
+      // Board 1: Items 111-115 (Parts of Speech: Nouns & Verbs)
+      { id: 111, type: "dnd", board: 1, topic: "Parts of Speech", prompt: "water, rice, information, sugar, furniture", answer: "Mass Noun", explanation: "Mass Noun: Uncountable substances or broad concepts (water, rice, information, sugar, furniture)." },
+      { id: 112, type: "dnd", board: 1, topic: "Parts of Speech", prompt: "team, flock of birds, herd of cattle, committee", answer: "Collective Noun", explanation: "Collective Noun: Identifies a group acting as a single unit (team, flock of birds, herd of cattle, committee)." },
+      { id: 113, type: "dnd", board: 1, topic: "Parts of Speech", prompt: "freedom, honesty, love, courage, happiness", answer: "Abstract Noun", explanation: "Abstract Noun: Intangible concepts, emotions, or values (freedom, honesty, love, courage, happiness)." },
+      { id: 114, type: "dnd", board: 1, topic: "Parts of Speech", prompt: "The chef baked a cake. (cake = direct object)", answer: "Transitive Verbs", explanation: "Transitive Verbs: Direct action toward a receiving direct object." },
+      { id: 115, type: "dnd", board: 1, topic: "Parts of Speech", prompt: "The baby slept peacefully. (No direct object present)", answer: "Intransitive Verbs", explanation: "Intransitive Verbs: Express action without requiring an object recipient." },
+
+      // Board 2: Items 116-120 (Punctuation & Sentence Structures)
+      { id: 116, type: "dnd", board: 2, topic: "Sentence Structures & Clauses", prompt: "The dog barked and ran. (SS-CP)", answer: "1. Simple Sentence", explanation: "1. Simple Sentence: Contains 1 independent clause expressing a unified thought." },
+      { id: 117, type: "dnd", board: 2, topic: "Sentence Structures & Clauses", prompt: "The library was quiet; students were studying for finals.", answer: "2. Compound Sentence", explanation: "2. Compound Sentence: Contains 2 or more independent clauses joined by FANBOYS + comma or semicolon (;)." },
+      { id: 118, type: "dnd", board: 2, topic: "Sentence Structures & Clauses", prompt: "I will call you when I arrive at the station.", answer: "3. Complex Sentence", explanation: "3. Complex Sentence: Contains 1 independent clause linked to 1 or more dependent clauses." },
+      { id: 119, type: "dnd", board: 2, topic: "Sentence Structures & Clauses", prompt: "Because the weather was bad, the flight was delayed, and many travelers were stranded at the airport.", answer: "4. Compound-Complex Sentence", explanation: "4. Compound-Complex Sentence: Contains 2 or more independent clauses combined with 1 or more dependent clauses." },
+      { id: 120, type: "dnd", board: 2, topic: "Punctuation & Sentence Types", prompt: "What an incredible performance that was!", answer: "Exclamatory Sentence (!)", explanation: "Exclamatory Sentence (!) — Expresses strong emotion, surprise, or urgency." },
+
+      // Board 3: Items 121-125 (Subject-Verb Agreement Rules 1-12)
+      { id: 121, type: "dnd", board: 3, topic: "Subject-Verb Agreement", prompt: "One hundred pesos is my allowance today.", answer: "RULE 6: WORDS STATING AMOUNT OF MONEY, UNITS OF MEASUREMENT", explanation: "RULE 6: Words stating an amount of money or units of measurement are usually singular." },
+      { id: 122, type: "dnd", board: 3, topic: "Subject-Verb Agreement", prompt: "One of the participants bags the award.", answer: "RULE 10: THE CLAUSE \"ONE OF THE\"", explanation: "RULE 10: The clause \"one of the\" takes a singular verb regardless of the phrase." },
+      { id: 123, type: "dnd", board: 3, topic: "Subject-Verb Agreement", prompt: "The scissors are on the table. / The pair of scissors is on the table.", answer: "RULE 8: PLURAL FORM SUBJECTS WITH A SINGULAR MEANING", explanation: "RULE 8: Plural form subjects with a singular meaning take a singular verb." },
+      { id: 124, type: "dnd", board: 3, topic: "Subject-Verb Agreement", prompt: "The number of volunteers grows each year. / A number of volunteers grow tomatoes each summer.", answer: "RULE 11: THE PHRASE \"THE NUMBER OF\" vs. \"A NUMBER OF\"", explanation: "RULE 11: \"The number of\" uses a singular verb, while \"a number of\" uses a plural verb." },
+      { id: 125, type: "dnd", board: 3, topic: "Subject-Verb Agreement", prompt: "Neither the actors nor the director is following the lines closely.", answer: "RULE 3C: COMPOUND SUBJECT JOINED BY OR / NOR", explanation: "RULE 3C: The verb agrees with the subject nearer to it." }
+    ];
+
+    const DND_BOARDS_META = {
+      1: { title: "Board 1 (Items 111–115): Noun & Verb Classifications", tokens: ["Mass Noun", "Collective Noun", "Abstract Noun", "Transitive Verbs", "Intransitive Verbs"] },
+      2: { title: "Board 2 (Items 116–120): Punctuation & The 4 Sentence Structures", tokens: ["1. Simple Sentence", "2. Compound Sentence", "3. Complex Sentence", "4. Compound-Complex Sentence", "Exclamatory Sentence (!)"] },
+      3: { title: "Board 3 (Items 121–125): Subject-Verb Agreement Rules", tokens: ["RULE 6: WORDS STATING AMOUNT OF MONEY, UNITS OF MEASUREMENT", "RULE 10: THE CLAUSE \"ONE OF THE\"", "RULE 8: PLURAL FORM SUBJECTS WITH A SINGULAR MEANING", "RULE 11: THE PHRASE \"THE NUMBER OF\" vs. \"A NUMBER OF\"", "RULE 3C: COMPOUND SUBJECT JOINED BY OR / NOR"] }
+    };
+
+    /* ==========================================================================
+       OFFLINE LOCALSTORAGE STATE MANAGEMENT
+       ========================================================================== */
+    const STORAGE_KEY = "english_reviewer_blue_green_v2";
+
+    const defaultState = {
+      masteredSections: [],
+      masteredCards: [],
+      needsReviewCards: [],
+      examAnswers: {},
+      examPage: 0,
+      examHistory: []
+    };
+
+    let appState = loadState();
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return JSON.parse(JSON.stringify(defaultState));
+        const parsed = JSON.parse(raw);
+        return {
+          masteredSections: Array.isArray(parsed.masteredSections) ? parsed.masteredSections : [],
+          masteredCards: Array.isArray(parsed.masteredCards) ? parsed.masteredCards : [],
+          needsReviewCards: Array.isArray(parsed.needsReviewCards) ? parsed.needsReviewCards : [],
+          examAnswers: parsed.examAnswers && typeof parsed.examAnswers === "object" ? parsed.examAnswers : {},
+          examPage: typeof parsed.examPage === "number" ? parsed.examPage : 0,
+          examHistory: Array.isArray(parsed.examHistory) ? parsed.examHistory : []
+        };
+      } catch (e) {
+        return JSON.parse(JSON.stringify(defaultState));
+      }
+    }
+
+    function saveState(silent = false) {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
+        updateGlobalStats();
+        if (!silent) showToast("Saved locally on device");
+      } catch (e) {
+        console.warn("Storage warning:", e);
+      }
+    }
+
+    let toastTimer = null;
+    function showToast(msg) {
+      const el = document.getElementById("toastBanner");
+      el.textContent = msg;
+      el.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => el.classList.remove("show"), 2000);
+    }
+
+    /* ==========================================================================
+       GLOBAL STATS & SCROLL REVEAL OBSERVER
+       ========================================================================== */
+    function updateGlobalStats() {
+      const secCount = appState.masteredSections.length;
+      const totalSec = STUDY_SECTIONS.length;
+      document.getElementById("statNotesText").textContent = `${secCount} / ${totalSec} Sections`;
+      document.getElementById("statNotesBar").style.width = `${Math.round((secCount / totalSec) * 100)}%`;
+
+      const cardCount = appState.masteredCards.length;
+      const totalCards = FLASHCARDS.length;
+      document.getElementById("statCardsText").textContent = `${cardCount} / ${totalCards} Cards`;
+      document.getElementById("statCardsBar").style.width = `${Math.round((cardCount / totalCards) * 100)}%`;
+
+      const answeredCount = Object.keys(appState.examAnswers).filter(k => String(appState.examAnswers[k]).trim() !== "").length;
+      document.getElementById("statExamText").textContent = `${answeredCount} / 125 Answered`;
+      document.getElementById("statExamBar").style.width = `${Math.round((answeredCount / 125) * 100)}%`;
+      document.getElementById("examAnsweredCounter").textContent = `Answered: ${answeredCount} / 125`;
+
+      if (appState.examHistory.length > 0) {
+        const latest = appState.examHistory[appState.examHistory.length - 1];
+        document.getElementById("statScoreText").textContent = `${latest.score} / 125 (${latest.percent}%)`;
+        document.getElementById("statAttemptsText").textContent = `${appState.examHistory.length} completed attempt(s)`;
+      } else {
+        document.getElementById("statScoreText").textContent = "Not Taken Yet";
+        document.getElementById("statAttemptsText").textContent = "0 completed attempts";
+      }
+    }
+
+    let revealObserver = null;
+    function initScrollReveal() {
+      if (revealObserver) revealObserver.disconnect();
+      revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.08 });
+
+      document.querySelectorAll(".reveal").forEach(el => revealObserver.observe(el));
+    }
+
+    /* ==========================================================================
+       TAB NAVIGATION LOGIC
+       ========================================================================== */
+    function switchTab(tabName) {
+      document.querySelectorAll(".nav-tab").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.tab === tabName);
+      });
+      document.querySelectorAll(".view-panel").forEach(panel => {
+        panel.classList.toggle("active", panel.id === `view-${tabName}`);
+      });
+
+      if (tabName === "analytics") renderAnalytics();
+      if (tabName === "exam") renderExamPage();
+      initScrollReveal();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    document.querySelectorAll(".nav-tab").forEach(btn => {
+      btn.addEventListener("click", () => switchTab(btn.dataset.tab));
+    });
+
+    /* ==========================================================================
+       VIEW 1: STUDY REVIEWER RENDERING & SEARCH
+       ========================================================================== */
+    let activeReviewerTopic = "All";
+    let reviewerSearchQuery = "";
+
+    function renderReviewer() {
+      const container = document.getElementById("reviewerContainer");
+      const q = reviewerSearchQuery.trim().toLowerCase();
+
+      const filtered = STUDY_SECTIONS.filter(sec => {
+        const matchesTopic = activeReviewerTopic === "All" || sec.topic === activeReviewerTopic;
+        if (!matchesTopic) return false;
+        if (!q) return true;
+        const blob = [
+          sec.topic,
+          sec.title,
+          sec.lead,
+          sec.mnemonicTitle || "",
+          sec.mnemonicHtml || "",
+          ...sec.rules.map(r => `${r.name} ${r.desc} ${r.example}`)
+        ].join(" ").toLowerCase();
+        return blob.includes(q);
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = `<div class="panel-card"><p>No matching grammar notes found for "<strong>${escapeHtml(reviewerSearchQuery)}</strong>". Try clearing your search filter.</p></div>`;
+        return;
+      }
+
+      container.innerHTML = filtered.map(sec => {
+        const isMastered = appState.masteredSections.includes(sec.id);
+        return `
+          <article class="study-card reveal ${isMastered ? "mastered" : ""}" id="${sec.id}">
+            <div class="study-card-header" onclick="toggleStudyCard('${sec.id}')">
+              <div>
+                <span class="study-topic-tag">${escapeHtml(sec.topic)}</span>
+                <h2 class="study-card-title">${escapeHtml(sec.title)}</h2>
+              </div>
+              <div class="study-card-actions" onclick="event.stopPropagation()">
+                <button type="button" class="btn btn-sm ${isMastered ? "btn-accent" : ""}" onclick="toggleSectionMastered('${sec.id}')">
+                  ${isMastered ? "&#10003; Mastered" : "Mark Section Mastered"}
+                </button>
+              </div>
+            </div>
+            <div class="study-card-body">
+              <p class="rule-lead">${escapeHtml(sec.lead)}</p>
+              <ul class="rule-list">
+                ${sec.rules.map(rule => `
+                  <li class="rule-item">
+                    <strong>${escapeHtml(rule.name)}</strong>
+                    <div>${escapeHtml(rule.desc)}</div>
+                    <div class="example-callout"><span>Example:</span> ${escapeHtml(rule.example)}</div>
+                  </li>
+                `).join("")}
+              </ul>
+              ${sec.mnemonicTitle ? `
+                <div class="mnemonic-box">
+                  <h4>${escapeHtml(sec.mnemonicTitle)}</h4>
+                  <div>${sec.mnemonicHtml}</div>
+                </div>
+              ` : ""}
+            </div>
+          </article>
+        `;
+      }).join("");
+
+      initScrollReveal();
+    }
+
+    function toggleStudyCard(id) {
+      const el = document.getElementById(id);
+      if (el) el.classList.toggle("collapsed");
+    }
+
+    function toggleSectionMastered(id) {
+      const idx = appState.masteredSections.indexOf(id);
+      if (idx >= 0) {
+        appState.masteredSections.splice(idx, 1);
+      } else {
+        appState.masteredSections.push(id);
+      }
+      saveState();
+      renderReviewer();
+    }
+
+    document.getElementById("reviewerTopicPills").addEventListener("click", (e) => {
+      const btn = e.target.closest(".pill-btn");
+      if (!btn) return;
+      document.querySelectorAll("#reviewerTopicPills .pill-btn").forEach(p => p.classList.remove("active"));
+      btn.classList.add("active");
+      activeReviewerTopic = btn.dataset.topic;
+      renderReviewer();
+    });
+
+    document.getElementById("reviewerSearchInput").addEventListener("input", (e) => {
+      reviewerSearchQuery = e.target.value;
+      renderReviewer();
+    });
+
+    /* ==========================================================================
+       VIEW 2: INTERACTIVE 3D FLIP CARDS
+       ========================================================================== */
+    let filteredDeck = [...FLASHCARDS];
+    let fcIndex = 0;
+
+    function filterFlashcards() {
+      const val = document.getElementById("fcTopicFilter").value;
+      if (val === "All") {
+        filteredDeck = [...FLASHCARDS];
+      } else if (val === "NeedsReview") {
+        filteredDeck = FLASHCARDS.filter(c => appState.needsReviewCards.includes(c.id));
+        if (filteredDeck.length === 0) {
+          showToast("No cards marked 'Needs Practice' yet! Showing all cards.");
+          document.getElementById("fcTopicFilter").value = "All";
+          filteredDeck = [...FLASHCARDS];
+        }
+      } else {
+        filteredDeck = FLASHCARDS.filter(c => c.topic === val);
+      }
+      fcIndex = 0;
+      renderCurrentFlashcard();
+    }
+
+    function renderCurrentFlashcard() {
+      const card3d = document.getElementById("flashcard3d");
+      card3d.classList.remove("is-flipped");
+
+      if (filteredDeck.length === 0) return;
+      if (fcIndex >= filteredDeck.length) fcIndex = 0;
+      if (fcIndex < 0) fcIndex = filteredDeck.length - 1;
+
+      const card = filteredDeck[fcIndex];
+      const isMastered = appState.masteredCards.includes(card.id);
+      const isReview = appState.needsReviewCards.includes(card.id);
+
+      document.getElementById("fcCounterLabel").textContent = `Card ${fcIndex + 1} of ${filteredDeck.length}`;
+      document.getElementById("fcFrontTopic").textContent = card.topic;
+      document.getElementById("fcBackTopic").textContent = card.topic;
+      document.getElementById("fcFrontText").textContent = card.q;
+      document.getElementById("fcBackText").textContent = card.a;
+      document.getElementById("fcBackExample").textContent = `Example: ${card.ex}`;
+
+      const statusBadge = isMastered ? "Mastered ✓" : isReview ? "Needs Practice" : "Unmarked";
+      document.getElementById("fcFrontStatus").textContent = statusBadge;
+    }
+
+    document.getElementById("flashcardScene").addEventListener("click", () => {
+      document.getElementById("flashcard3d").classList.toggle("is-flipped");
+    });
+
+    document.getElementById("flashcardScene").addEventListener("keydown", (e) => {
+      if (e.code === "Space" || e.code === "Enter") {
+        e.preventDefault();
+        document.getElementById("flashcard3d").classList.toggle("is-flipped");
+      }
+    });
+
+    document.getElementById("fcTopicFilter").addEventListener("change", filterFlashcards);
+
+    document.getElementById("fcShuffleBtn").addEventListener("click", () => {
+      for (let i = filteredDeck.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [filteredDeck[i], filteredDeck[j]] = [filteredDeck[j], filteredDeck[i]];
+      }
+      fcIndex = 0;
+      renderCurrentFlashcard();
+      showToast("Deck shuffled");
+    });
+
+    document.getElementById("fcPrevBtn").addEventListener("click", () => {
+      fcIndex = (fcIndex - 1 + filteredDeck.length) % filteredDeck.length;
+      renderCurrentFlashcard();
+    });
+
+    document.getElementById("fcNextBtn").addEventListener("click", () => {
+      fcIndex = (fcIndex + 1) % filteredDeck.length;
+      renderCurrentFlashcard();
+    });
+
+    document.getElementById("fcMasteredBtn").addEventListener("click", () => {
+      const card = filteredDeck[fcIndex];
+      if (!appState.masteredCards.includes(card.id)) appState.masteredCards.push(card.id);
+      appState.needsReviewCards = appState.needsReviewCards.filter(id => id !== card.id);
+      saveState();
+      renderCurrentFlashcard();
+    });
+
+    document.getElementById("fcNeedsReviewBtn").addEventListener("click", () => {
+      const card = filteredDeck[fcIndex];
+      if (!appState.needsReviewCards.includes(card.id)) appState.needsReviewCards.push(card.id);
+      appState.masteredCards = appState.masteredCards.filter(id => id !== card.id);
+      saveState();
+      renderCurrentFlashcard();
+    });
+
+    /* ==========================================================================
+       VIEW 3: 125-ITEM MULTI-FORMAT MOCK EXAM (PAGINATED 15 ITEMS / PAGE)
+       ========================================================================== */
+    const ITEMS_PER_PAGE = 15;
+    const TOTAL_PAGES = Math.ceil(EXAM_QUESTIONS.length / ITEMS_PER_PAGE); // 9 pages
+    let selectedDndToken = null; // For mobile tap-to-select + tap-to-place
+
+    function renderExamNavGrid() {
+      const grid = document.getElementById("examNavGrid");
+      const startIdx = appState.examPage * ITEMS_PER_PAGE;
+      const endIdx = startIdx + ITEMS_PER_PAGE;
+
+      grid.innerHTML = EXAM_QUESTIONS.map((q, idx) => {
+        const ans = appState.examAnswers[q.id];
+        const isAnswered = ans !== undefined && String(ans).trim() !== "";
+        const isCurrent = idx >= startIdx && idx < endIdx;
+        return `<button type="button" class="q-dot ${isAnswered ? "answered" : ""} ${isCurrent ? "current-page" : ""}" onclick="jumpToQuestion(${idx})" title="Item ${q.id}: ${q.topic}">${q.id}</button>`;
+      }).join("");
+    }
+
+    function jumpToQuestion(zeroIndex) {
+      appState.examPage = Math.floor(zeroIndex / ITEMS_PER_PAGE);
+      saveState(true);
+      renderExamPage();
+      const target = document.getElementById(`q-block-${zeroIndex + 1}`);
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    }
+
+    function getPartBanner(itemId) {
+      if (itemId === 1) {
+        return `<div class="exam-section-banner"><h3>Part I: Multiple Choice (Items 1–40)</h3><p>Select the best grammatical, mechanical, or rule-based answer for each question.</p></div>`;
+      }
+      if (itemId === 41) {
+        return `<div class="exam-section-banner"><h3>Part II: True or False (Items 41–60)</h3><p>Determine whether each statement about the grammar rules, exceptions, or samples is True or False.</p></div>`;
+      }
+      if (itemId === 61) {
+        return `<div class="exam-section-banner"><h3>Part III: Term &amp; Rule Identification (Items 61–85)</h3><p>Type the exact grammatical term, sentence type/structure, acronym, or SVA rule name.</p></div>`;
+      }
+      if (itemId === 86) {
+        return `<div class="exam-section-banner"><h3>Part IV: Fill in the Blank (Items 86–110)</h3><p>Supply the missing capitalized noun, punctuation mark, contraction, plural form, or agreeing verb.</p></div>`;
+      }
+      if (itemId === 111) {
+        return `<div class="exam-section-banner"><h3>Part V: Drag &amp; Drop Matching Boards (Items 111–125)</h3><p>Drag tokens into the matching slots—or on mobile/touchscreens, tap a token to highlight it and tap a target slot to place it.</p></div>`;
+      }
+      return "";
+    }
+
+    function renderExamPage() {
+      const container = document.getElementById("examQuestionsContainer");
+      if (appState.examPage >= TOTAL_PAGES) appState.examPage = 0;
+      const start = appState.examPage * ITEMS_PER_PAGE;
+      const end = Math.min(start + ITEMS_PER_PAGE, EXAM_QUESTIONS.length);
+      const slice = EXAM_QUESTIONS.slice(start, end);
+
+      let html = "";
+
+      // If on Page 9 (Items 111–125), render the 3 interactive Drag & Drop Boards cleanly
+      if (slice[0] && slice[0].type === "dnd") {
+        html += getPartBanner(111);
+        [1, 2, 3].forEach(boardNum => {
+          const meta = DND_BOARDS_META[boardNum];
+          const boardItems = slice.filter(q => q.board === boardNum);
+          const placedValues = boardItems.map(q => appState.examAnswers[q.id]).filter(Boolean);
+
+          html += `
+            <div class="dnd-board" id="q-block-${boardItems[0].id}">
+              <h4 style="margin-bottom:0.45rem; font-size:1.05rem;">${escapeHtml(meta.title)}</h4>
+              <div class="dnd-instructions">
+                <strong>How to Match:</strong> Drag any blue token below into its matching drop zone, <em>or</em> tap a token to select it (highlights green) and tap a drop zone to place it.
+              </div>
+              <div class="dnd-bank">
+                ${meta.tokens.map(token => {
+                  const isPlaced = placedValues.includes(token);
+                  const isSelected = selectedDndToken && selectedDndToken.board === boardNum && selectedDndToken.token === token;
+                  return `<div class="dnd-token ${isPlaced ? "placed-token" : ""} ${isSelected ? "selected-token" : ""}"
+                    draggable="true"
+                    ondragstart="handleDragStart(event, ${boardNum}, '${escapeAttr(token)}')"
+                    onclick="handleTokenTap(${boardNum}, '${escapeAttr(token)}')">${escapeHtml(token)}</div>`;
+                }).join("")}
+              </div>
+              <div class="dnd-slots">
+                ${boardItems.map(q => {
+                  const val = appState.examAnswers[q.id] || "";
+                  return `
+                    <div class="dnd-row" id="q-block-${q.id}">
+                      <div>
+                        <span style="font-size:0.75rem; font-weight:700; color:var(--royal-blue);">ITEM #${q.id} • ${escapeHtml(q.topic)}</span>
+                        <div style="font-weight:600; font-size:0.94rem; margin-top:0.15rem;">${escapeHtml(q.prompt)}</div>
+                      </div>
+                      <div class="dnd-dropzone ${val ? "filled" : ""}"
+                        ondragover="handleDragOver(event)"
+                        ondragleave="handleDragLeave(event)"
+                        ondrop="handleDrop(event, ${q.id}, ${boardNum})"
+                        onclick="handleSlotTap(${q.id}, ${boardNum})">
+                        <span>${val ? escapeHtml(val) : "Drop or tap here to assign"}</span>
+                        ${val ? `<button type="button" class="clear-slot-btn" onclick="event.stopPropagation(); clearDndSlot(${q.id})" aria-label="Remove answer">&times;</button>` : ""}
+                      </div>
+                    </div>
+                  `;
+                }).join("")}
+              </div>
+            </div>
+          `;
+        });
+      } else {
+        // Render Standard MC, True/False, Identification, and Fill-in-the-Blank items
+        slice.forEach(q => {
+          html += getPartBanner(q.id);
+          const currentAns = appState.examAnswers[q.id] || "";
+
+          if (q.type === "mc") {
+            const letters = ["A", "B", "C", "D"];
+            html += `
+              <div class="question-card" id="q-block-${q.id}">
+                <div class="q-header">
+                  <span>Item #${q.id} • Multiple Choice</span>
+                  <span>${escapeHtml(q.topic)}</span>
+                </div>
+                <div class="q-prompt">${escapeHtml(q.prompt)}</div>
+                <div class="mc-options">
+                  ${q.options.map((opt, idx) => `
+                    <button type="button" class="mc-option ${currentAns === opt ? "selected" : ""}" onclick="selectMcOption(${q.id}, '${escapeAttr(opt)}')">
+                      <span class="mc-letter">${letters[idx]}</span>
+                      <span>${escapeHtml(opt)}</span>
+                    </button>
+                  `).join("")}
+                </div>
+              </div>
+            `;
+          } else if (q.type === "tf") {
+            html += `
+              <div class="question-card" id="q-block-${q.id}">
+                <div class="q-header">
+                  <span>Item #${q.id} • True or False</span>
+                  <span>${escapeHtml(q.topic)}</span>
+                </div>
+                <div class="q-prompt">${escapeHtml(q.prompt)}</div>
+                <div class="tf-options">
+                  ${["True", "False"].map((choice, idx) => `
+                    <button type="button" class="mc-option ${currentAns === choice ? "selected" : ""}" onclick="selectMcOption(${q.id}, '${choice}')">
+                      <span class="mc-letter">${idx === 0 ? "T" : "F"}</span>
+                      <span>${choice}</span>
+                    </button>
+                  `).join("")}
+                </div>
+              </div>
+            `;
+          } else if (q.type === "id" || q.type === "fib") {
+            const label = q.type === "id" ? "Term / Rule Identification" : "Fill in the Blank";
+            const placeholder = q.type === "id" ? "Type grammatical term or SVA rule..." : "Type your answer here...";
+            html += `
+              <div class="question-card" id="q-block-${q.id}">
+                <div class="q-header">
+                  <span>Item #${q.id} • ${label}</span>
+                  <span>${escapeHtml(q.topic)}</span>
+                </div>
+                <div class="q-prompt">${escapeHtml(q.prompt)}</div>
+                <input type="text" class="text-answer-input" value="${escapeAttr(currentAns)}" placeholder="${placeholder}" oninput="handleTextExamInput(${q.id}, this.value)" />
+              </div>
+            `;
+          }
+        });
+      }
+
+      container.innerHTML = html;
+      document.getElementById("examPageIndicator").textContent = `Page ${appState.examPage + 1} of ${TOTAL_PAGES} (Items ${start + 1}–${end})`;
+      document.getElementById("examPrevPageBtn").disabled = appState.examPage === 0;
+      document.getElementById("examNextPageBtn").disabled = appState.examPage === TOTAL_PAGES - 1;
+      renderExamNavGrid();
+    }
+
+    function selectMcOption(qId, optionVal) {
+      appState.examAnswers[qId] = optionVal;
+      saveState(true);
+      renderExamPage();
+    }
+
+    function handleTextExamInput(qId, val) {
+      appState.examAnswers[qId] = val;
+      saveState(true);
+      renderExamNavGrid();
+    }
+
+    // Drag & Drop + Mobile Tap Handlers
+    let draggedPayload = null;
+
+    function handleDragStart(e, boardNum, token) {
+      draggedPayload = { board: boardNum, token: unescapeAttr(token) };
+      e.dataTransfer.effectAllowed = "move";
+    }
+
+    function handleDragOver(e) {
+      e.preventDefault();
+      e.currentTarget.classList.add("drag-over");
+    }
+
+    function handleDragLeave(e) {
+      e.currentTarget.classList.remove("drag-over");
+    }
+
+    function handleDrop(e, qId, boardNum) {
+      e.preventDefault();
+      e.currentTarget.classList.remove("drag-over");
+      if (!draggedPayload || draggedPayload.board !== boardNum) return;
+      appState.examAnswers[qId] = draggedPayload.token;
+      draggedPayload = null;
+      selectedDndToken = null;
+      saveState(true);
+      renderExamPage();
+    }
+
+    function handleTokenTap(boardNum, token) {
+      const clean = unescapeAttr(token);
+      if (selectedDndToken && selectedDndToken.board === boardNum && selectedDndToken.token === clean) {
+        selectedDndToken = null;
+      } else {
+        selectedDndToken = { board: boardNum, token: clean };
+      }
+      renderExamPage();
+    }
+
+    function handleSlotTap(qId, boardNum) {
+      if (!selectedDndToken) {
+        showToast("Tap a blue token above first, then tap this slot");
+        return;
+      }
+      if (selectedDndToken.board !== boardNum) {
+        showToast("Please select a token from this same matching board");
+        return;
+      }
+      appState.examAnswers[qId] = selectedDndToken.token;
+      selectedDndToken = null;
+      saveState(true);
+      renderExamPage();
+    }
+
+    function clearDndSlot(qId) {
+      delete appState.examAnswers[qId];
+      saveState(true);
+      renderExamPage();
+    }
+
+    document.getElementById("examPrevPageBtn").addEventListener("click", () => {
+      if (appState.examPage > 0) {
+        appState.examPage--;
+        saveState(true);
+        renderExamPage();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    });
+
+    document.getElementById("examNextPageBtn").addEventListener("click", () => {
+      if (appState.examPage < TOTAL_PAGES - 1) {
+        appState.examPage++;
+        saveState(true);
+        renderExamPage();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    });
+
+    document.getElementById("examSectionJump").addEventListener("change", (e) => {
+      jumpToQuestion(parseInt(e.target.value, 10));
+    });
+
+    /* ==========================================================================
+       EXAM GRADING, ANALYTICS & PERSONALIZED STUDY FEEDBACK
+       ========================================================================== */
+    function normalizeText(str) {
+      return String(str || "")
+        .trim()
+        .toLowerCase()
+        .replace(/[.!?,;]+$/g, "")
+        .replace(/\s+/g, " ");
+    }
+
+    function isQuestionCorrect(q, userVal) {
+      if (userVal === undefined || String(userVal).trim() === "") return false;
+      if (q.type === "mc" || q.type === "tf" || q.type === "dnd") {
+        return String(userVal).trim() === q.answer;
+      }
+      // Case-sensitive exact check for Capitalization FIB items 86, 87, 88
+      if (q.id === 86 || q.id === 87 || q.id === 88) {
+        const trimmed = String(userVal).trim();
+        return q.answers.includes(trimmed);
+      }
+      const normUser = normalizeText(userVal);
+      return q.answers.some(accepted => normalizeText(accepted) === normUser);
+    }
+
+    function gradeAndSubmitExam() {
+      let totalCorrect = 0;
+      const byTopic = {};
+      const byFormat = {
+        mc: { label: "Part I: Multiple Choice", correct: 0, total: 0 },
+        tf: { label: "Part II: True or False", correct: 0, total: 0 },
+        id: { label: "Part III: Term & Rule Identification", correct: 0, total: 0 },
+        fib: { label: "Part IV: Fill in the Blank", correct: 0, total: 0 },
+        dnd: { label: "Part V: Drag & Drop Matching", correct: 0, total: 0 }
+      };
+
+      const itemResults = EXAM_QUESTIONS.map(q => {
+        const userVal = appState.examAnswers[q.id] || "";
+        const correct = isQuestionCorrect(q, userVal);
+        if (correct) totalCorrect++;
+
+        if (!byTopic[q.topic]) byTopic[q.topic] = { correct: 0, total: 0 };
+        byTopic[q.topic].total++;
+        if (correct) byTopic[q.topic].correct++;
+
+        byFormat[q.type].total++;
+        if (correct) byFormat[q.type].correct++;
+
+        return {
+          id: q.id,
+          topic: q.topic,
+          type: q.type,
+          prompt: q.prompt,
+          userVal,
+          expected: q.answer || q.answers[0],
+          correct,
+          explanation: q.explanation
+        };
+      });
+
+      const percent = Math.round((totalCorrect / EXAM_QUESTIONS.length) * 100);
+      const attemptRecord = {
+        date: new Date().toLocaleString(),
+        score: totalCorrect,
+        total: EXAM_QUESTIONS.length,
+        percent,
+        byTopic,
+        byFormat,
+        itemResults
+      };
+
+      appState.examHistory.push(attemptRecord);
+      saveState();
+      switchTab("analytics");
+      showToast(`Exam graded! Score: ${totalCorrect} / 125 (${percent}%)`);
+    }
+
+    function openConfirmModal(title, message, onConfirm) {
+      document.getElementById("modalTitle").textContent = title;
+      document.getElementById("modalMessage").textContent = message;
+      const modal = document.getElementById("confirmModal");
+      modal.classList.add("open");
+
+      const confirmBtn = document.getElementById("modalConfirmBtn");
+      const cancelBtn = document.getElementById("modalCancelBtn");
+
+      const cleanup = () => {
+        modal.classList.remove("open");
+        confirmBtn.onclick = null;
+        cancelBtn.onclick = null;
+      };
+
+      confirmBtn.onclick = () => {
+        cleanup();
+        onConfirm();
+      };
+      cancelBtn.onclick = cleanup;
+    }
+
+    function handleExamSubmitClick() {
+      const answeredCount = Object.keys(appState.examAnswers).filter(k => String(appState.examAnswers[k]).trim() !== "").length;
+      const msg = answeredCount < 125
+        ? `You have answered ${answeredCount} out of 125 items (${125 - answeredCount} unanswered). Submit now to generate your score and personalized study feedback?`
+        : "You have answered all 125 items! Ready to submit and view your complete diagnostic performance report?";
+      openConfirmModal("Submit Mock Exam", msg, gradeAndSubmitExam);
+    }
+
+    document.getElementById("submitExamBtn").addEventListener("click", handleExamSubmitClick);
+    document.getElementById("submitExamBottomBtn").addEventListener("click", handleExamSubmitClick);
+
+    const TOPIC_ADVICE = {
+      "Capitalization": "Review proper vs. common nouns (e.g., Mount Everest vs. mountain), titles directly before personal names (President Obama, Uncle Jerry, Doctor Smith), historical eras (Renaissance, Middle Ages), and always capitalizing the pronoun 'I'.",
+      "Punctuation & Sentence Types": "Focus on the 4 sentence purposes (Declarative, Interrogative, Imperative, Exclamatory), enclosing non-essential clauses in commas, using FANBOYS with commas, distinguishing colons (lists) from semicolons (independent clauses), and singular vs. plural apostrophes (David's vs. students').",
+      "Parts of Speech": "Memorize PAPANICVA, practice the 7 noun types (Concrete, Abstract, Collective, Count, Mass, Common, Proper), review plural rules (-ves, consonant+y → -ies, plural-only nouns like scissors), and distinguish Linking, Helping, Transitive, and Intransitive verbs.",
+      "Sentence Structures & Clauses": "Practice spotting dependent clause fragments ('Because it was raining outside') and distinguishing Simple (SS-SP/CS-CP), Compound (comma+FANBOYS or semicolon), Complex (subordinating conjunctions), and Compound-Complex structures.",
+      "Subject-Verb Agreement": "Drill SVA Rules 1–12 closely: intervening phrases (Rule 1), collocations/single units (Rule 2), indefinite pronouns & nearer subject with or/nor (Rules 3a–3c), inverted subjects (Rule 4), collective nouns (Rule 5), fractions with 'of the' (Rule 6), titles & singular-meaning plurals (Rules 7–8), and 'one of those who' vs. 'the number of' vs. 'every/many a' (Rules 9–12)."
+    };
+
+    function renderAnalytics() {
+      const container = document.getElementById("analyticsContent");
+      if (appState.examHistory.length === 0) {
+        container.innerHTML = `
+          <div class="panel-card reveal" style="text-align:center; padding:2.5rem 1.5rem;">
+            <h2 style="margin-bottom:0.65rem;">No Completed Mock Exam Attempts Yet</h2>
+            <p style="max-width:560px; margin:0 auto 1.25rem; color:var(--text-muted);">
+              Complete the 125-item Multi-Format Mock Exam (Multiple Choice, True or False, Identification, Fill in the Blank, and Drag &amp; Drop) to unlock your topic accuracy breakdown and personalized study roadmap.
+            </p>
+            <button type="button" class="btn btn-primary" onclick="switchTab('exam')">Go to 125-Item Mock Exam</button>
+          </div>
+        `;
+        initScrollReveal();
+        return;
+      }
+
+      const latest = appState.examHistory[appState.examHistory.length - 1];
+      const gradeLabel = latest.percent >= 90 ? "Distinction • Mastery Level"
+        : latest.percent >= 80 ? "Proficient • Strong Command"
+        : latest.percent >= 70 ? "Developing • Solid Foundation"
+        : "Needs Intensive Review";
+
+      const weakTopics = Object.entries(latest.byTopic)
+        .map(([topic, data]) => ({ topic, ...data, pct: Math.round((data.correct / data.total) * 100) }))
+        .sort((a, b) => a.pct - b.pct);
+
+      const weakFormats = Object.values(latest.byFormat)
+        .map(f => ({ ...f, pct: Math.round((f.correct / f.total) * 100) }))
+        .sort((a, b) => a.pct - b.pct);
+
+      const priorityWeak = weakTopics.filter(t => t.pct < 80);
+
+      container.innerHTML = `
+        <div class="analytics-hero reveal">
+          <div>
+            <span style="text-transform:uppercase; font-size:0.78rem; letter-spacing:0.08em; color:#a7f3d0; font-weight:700;">Diagnostic Performance Report</span>
+            <h2>${gradeLabel}</h2>
+            <p style="font-size:0.9rem; color:#dbeafe; margin-top:0.35rem;">Attempt recorded on ${escapeHtml(latest.date)} • Saved offline on this device.</p>
+          </div>
+          <div class="score-circle">
+            <strong>${latest.percent}%</strong>
+            <span>${latest.score} / ${latest.total}</span>
+          </div>
+        </div>
+
+        <div class="analytics-grid">
+          <div class="panel-card reveal">
+            <h3>Accuracy by Grammar Topic</h3>
+            ${weakTopics.map(t => `
+              <div class="bar-row">
+                <div class="bar-label-row">
+                  <span>${escapeHtml(t.topic)}</span>
+                  <span>${t.correct}/${t.total} (${t.pct}%)</span>
+                </div>
+                <div class="bar-track">
+                  <div class="bar-fill ${t.pct < 75 ? "weak" : ""}" style="width:${t.pct}%"></div>
+                </div>
+              </div>
+            `).join("")}
+          </div>
+
+          <div class="panel-card reveal">
+            <h3>Accuracy by Exam Question Format</h3>
+            ${weakFormats.map(f => `
+              <div class="bar-row">
+                <div class="bar-label-row">
+                  <span>${escapeHtml(f.label)}</span>
+                  <span>${f.correct}/${f.total} (${f.pct}%)</span>
+                </div>
+                <div class="bar-track">
+                  <div class="bar-fill ${f.pct < 75 ? "weak" : ""}" style="width:${f.pct}%"></div>
+                </div>
+              </div>
+            `).join("")}
+          </div>
+        </div>
+
+        <div class="panel-card reveal" style="margin-bottom:1.5rem;">
+          <h3>Personalized Study Enhancement Recommendations</h3>
+          ${priorityWeak.length === 0 ? `
+            <div class="feedback-recommendation">
+              <h4>Outstanding Mastery Across All Topics!</h4>
+              <p>You scored 80% or higher in every topic area. Keep your skills sharp by shuffling the Flip Cards or reviewing any missed items below.</p>
+            </div>
+          ` : priorityWeak.map(w => `
+            <div class="feedback-recommendation">
+              <h4>Enhance Focus: ${escapeHtml(w.topic)} (${w.pct}% Accuracy — ${w.total - w.correct} missed)</h4>
+              <p style="font-size:0.92rem; margin-bottom:0.65rem;">${escapeHtml(TOPIC_ADVICE[w.topic] || "")}</p>
+              <button type="button" class="btn btn-sm btn-accent" onclick="studyWeakTopic('${escapeAttr(w.topic)}')">Study ${escapeHtml(w.topic)} Notes &rarr;</button>
+            </div>
+          `).join("")}
+          <div class="feedback-recommendation" style="border-left-color:var(--royal-blue);">
+            <h4>Weakest Exam Format: ${escapeHtml(weakFormats[0].label)} (${weakFormats[0].pct}%)</h4>
+            <p style="font-size:0.9rem;">
+              ${weakFormats[0].label.includes("Identification") || weakFormats[0].label.includes("Fill")
+                ? "Active recall items require exact spelling, capitalization, and verb agreement without multiple-choice hints. Use the 3D Flip Cards to drill definitions and verb forms."
+                : "Practice eliminating distractor options by identifying the core subject and clause boundaries before selecting an answer."}
+            </p>
+          </div>
+        </div>
+
+        <div class="panel-card reveal">
+          <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:0.5rem; margin-bottom:1rem;">
+            <h3 style="border:none; margin:0; padding:0;">Complete 125-Item Answer Key &amp; Explanations</h3>
+            <label style="font-size:0.85rem; font-weight:700; display:flex; align-items:center; gap:0.4rem; cursor:pointer;">
+              <input type="checkbox" id="onlyMissedToggle" onchange="toggleOnlyMissed(this.checked)" />
+              Show Missed Items Only (${latest.total - latest.score})
+            </label>
+          </div>
+          <div id="answerKeyList">
+            ${renderAnswerKeyItems(latest.itemResults, false)}
+          </div>
+        </div>
+      `;
+
+      initScrollReveal();
+    }
+
+    function renderAnswerKeyItems(results, onlyMissed) {
+      const list = onlyMissed ? results.filter(r => !r.correct) : results;
+      if (list.length === 0) return "<p>No missed items to display!</p>";
+      return list.map(r => `
+        <div class="review-item-card ${r.correct ? "correct" : ""}">
+          <div style="display:flex; justify-content:space-between; font-size:0.78rem; font-weight:700; margin-bottom:0.25rem;">
+            <span>Item #${r.id} • ${escapeHtml(r.topic)}</span>
+            <span>${r.correct ? "&#10003; Correct" : "&#10007; Needs Review"}</span>
+          </div>
+          <div style="font-weight:600; font-size:0.94rem; margin-bottom:0.35rem;">${escapeHtml(r.prompt)}</div>
+          <div style="font-size:0.86rem;">
+            <strong>Your Answer:</strong> ${r.userVal ? escapeHtml(r.userVal) : "<em>(Blank / Unanswered)</em>"} &nbsp;|&nbsp;
+            <strong>Correct Answer:</strong> <span style="color:var(--emerald-green); font-weight:700;">${escapeHtml(r.expected)}</span>
+          </div>
+          <div style="font-size:0.84rem; color:var(--text-muted); margin-top:0.25rem;">${escapeHtml(r.explanation)}</div>
+        </div>
+      `).join("");
+    }
+
+    function toggleOnlyMissed(checked) {
+      if (appState.examHistory.length === 0) return;
+      const latest = appState.examHistory[appState.examHistory.length - 1];
+      document.getElementById("answerKeyList").innerHTML = renderAnswerKeyItems(latest.itemResults, checked);
+    }
+
+    function studyWeakTopic(topic) {
+      activeReviewerTopic = topic;
+      document.querySelectorAll("#reviewerTopicPills .pill-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.topic === topic);
+      });
+      renderReviewer();
+      switchTab("reviewer");
+    }
+
+    /* ==========================================================================
+       RESET PROGRESS & UTILITY HELPERS
+       ========================================================================== */
+    document.getElementById("openResetModalBtn").addEventListener("click", () => {
+      openConfirmModal(
+        "Reset All Saved Offline Progress",
+        "This will erase all mastered study sections, flip card progress, current mock exam answers, and exam history stored on this device. Continue?",
+        () => {
+          appState = JSON.parse(JSON.stringify(defaultState));
+          saveState();
+          renderReviewer();
+          filterFlashcards();
+          renderExamPage();
+          renderAnalytics();
+          showToast("All local progress has been reset");
+        }
+      );
+    });
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function escapeAttr(str) {
+      return String(str).replace(/\\/g, "\\\\").replace(/'/g, "\\'").replace(/"/g, "&quot;");
+    }
+
+    function unescapeAttr(str) {
+      return String(str).replace(/&quot;/g, '"').replace(/\\'/g, "'").replace(/\\\\/g, "\\");
+    }
+
+    function updateNetworkBadge() {
+      const badgeText = document.getElementById("offlineStatusText");
+      if (navigator.onLine) {
+        badgeText.textContent = "Offline Ready • Progress Saved Locally";
+      } else {
+        badgeText.textContent = "Offline Mode Active • Saved Locally";
+      }
+    }
+
+    window.addEventListener("online", updateNetworkBadge);
+    window.addEventListener("offline", updateNetworkBadge);
+
+    /* ==========================================================================
+       INITIALIZE APPLICATION ON LOAD
+       ========================================================================== */
+    window.addEventListener("DOMContentLoaded", () => {
+      updateNetworkBadge();
+      updateGlobalStats();
+      renderReviewer();
+      renderCurrentFlashcard();
+      renderExamPage();
+      initScrollReveal();
+    });
+  </script>
 </body>
 </html>
